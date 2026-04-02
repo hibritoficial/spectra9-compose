@@ -3,18 +3,15 @@ import ContentLabel from "../../ContentLabel";
 
 export default function HeroSplit() {
   return (
-    <section className="relative w-full min-h-screen grid grid-cols-2 overflow-hidden">
-      {/* Left — Text */}
-      <div className="flex flex-col justify-center px-16 py-32">
+    <section className="hero-split relative w-full min-h-screen overflow-hidden">
+      {/* Text */}
+      <div className="hero-split-text flex flex-col justify-center px-16 py-32">
         <div className="content-label-container mb-2">
           <ContentLabel text="Headline principal — proposta ou manifesto" />
         </div>
 
         {/* Headline */}
-        <h1
-          className="font-serif text-[#e0e0e0] leading-[1.08] tracking-[-0.02em] mb-8 anim-headline"
-          style={{ fontSize: "clamp(40px, 5.5vw, 80px)" }}
-        >
+        <h1 className="hero-headline font-serif text-[#e0e0e0] leading-[1.08] tracking-[-0.02em] mb-8 anim-headline">
           Lorem ipsum dolor sit amet cons
         </h1>
 
@@ -33,7 +30,7 @@ export default function HeroSplit() {
         </div>
 
         {/* CTAs */}
-        <div className="flex gap-4">
+        <div className="hero-ctas flex gap-4">
           <button className="px-8 py-4 bg-[#e0e0e0] text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-cta-1">
             Explorar
           </button>
@@ -43,8 +40,8 @@ export default function HeroSplit() {
         </div>
       </div>
 
-      {/* Right — Visual */}
-      <div className="relative flex items-center justify-center anim-media-parallax">
+      {/* Visual */}
+      <div className="hero-split-visual relative flex items-center justify-center anim-media-parallax">
         <MediaPlaceholder
           label="split visual — 50% viewport"
           hint="Imagem, vídeo ou ilustração que ocupa metade exata da viewport. Pode ser fotografia de equipe, produto em uso, ou composição visual abstrata. Borda suave com o fundo (sem corte duro)."

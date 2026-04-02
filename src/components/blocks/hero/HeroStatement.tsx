@@ -3,7 +3,7 @@ import ContentLabel from "../../ContentLabel";
 
 export default function HeroStatement() {
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-8 py-32 overflow-hidden">
+    <section className="hero-statement relative w-full min-h-screen flex flex-col items-center justify-center px-8 py-32 overflow-hidden">
       {/* Background placeholder */}
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
@@ -21,10 +21,7 @@ export default function HeroStatement() {
         </div>
 
         {/* Headline */}
-        <h1
-          className="font-serif text-[#e0e0e0] leading-[1.05] tracking-[-0.03em] mb-16 anim-headline"
-          style={{ fontSize: "clamp(64px, 10vw, 120px)" }}
-        >
+        <h1 className="hero-headline font-serif text-[#e0e0e0] leading-[1.05] tracking-[-0.03em] mb-16 anim-headline">
           Lorem ipsum dolor
         </h1>
 
@@ -38,15 +35,15 @@ export default function HeroStatement() {
           blandit tempus consequat viverra.
         </p>
 
-        {/* Spacer — extreme vertical generosity */}
-        <div className="h-[200px]" />
+        {/* Spacer — reduces on smaller viewports via CSS */}
+        <div className="hero-spacer" />
 
         <div className="content-label-container mb-2">
           <ContentLabel text="CTAs — ação principal + ação secundária" />
         </div>
 
         {/* CTAs */}
-        <div className="flex gap-4">
+        <div className="hero-ctas flex gap-4">
           <button className="px-8 py-4 bg-[#e0e0e0] text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-cta-1">
             Iniciar agora
           </button>

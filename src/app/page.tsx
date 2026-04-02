@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import ControlBar from "../components/ControlBar";
+import ControlBar, { type ViewportMode } from "../components/ControlBar";
 import { blockRegistry } from "../components/blocks/registry";
 import {
   HeroStatement,
@@ -19,10 +19,17 @@ const heroComponents: Record<string, React.ComponentType> = {
   "hero-immersive": HeroImmersive,
 };
 
+const viewportWidths: Record<ViewportMode, number> = {
+  desktop: 1440,
+  tablet: 768,
+  mobile: 375,
+};
+
 export default function Home() {
   const [activePurpose, setActivePurpose] = useState("hero");
   const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [showJson, setShowJson] = useState(false);
+  const [viewport, setViewport] = useState<ViewportMode>("desktop");
   const [animKey, setAnimKey] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
 
@@ -32,19 +39,24 @@ export default function Home() {
     ? heroComponents[currentVariant.id]
     : null;
 
+  const isFramed = viewport !== "desktop";
+  const frameWidth = viewportWidths[viewport];
+
   const handlePurposeChange = useCallback((purposeId: string) => {
     setActivePurpose(purposeId);
     setActiveVariantIndex(0);
     setAnimKey((k) => k + 1);
   }, []);
 
-  const handleVariantChange = useCallback(
-    (index: number) => {
-      setActiveVariantIndex(index);
-      setAnimKey((k) => k + 1);
-    },
-    []
-  );
+  const handleVariantChange = useCallback((index: number) => {
+    setActiveVariantIndex(index);
+    setAnimKey((k) => k + 1);
+  }, []);
+
+  const handleViewportChange = useCallback((mode: ViewportMode) => {
+    setViewport(mode);
+    setAnimKey((k) => k + 1);
+  }, []);
 
   // Keyboard navigation
   useEffect(() => {
@@ -81,9 +93,11 @@ export default function Home() {
         activePurpose={activePurpose}
         activeVariantIndex={activeVariantIndex}
         showJson={showJson}
+        viewport={viewport}
         onPurposeChange={handlePurposeChange}
         onVariantChange={handleVariantChange}
         onToggleJson={() => setShowJson((v) => !v)}
+        onViewportChange={handleViewportChange}
       />
 
       {/* Content area */}
@@ -93,13 +107,46 @@ export default function Home() {
           ref={mainRef}
           className={`pt-14 transition-all duration-300 ${
             showJson ? "w-[calc(100%-400px)]" : "w-full"
-          }`}
+          } ${isFramed ? "flex justify-center" : ""}`}
         >
-          {BlockComponent ? (
-            <div key={animKey} className="variant-enter">
-              <BlockComponent />
+          {isFramed ? (
+            /* Device frame */
+            <div
+              className="relative my-8 transition-all duration-300"
+              style={{ width: frameWidth, maxWidth: "100%" }}
+            >
+              {/* Device border */}
+              <div
+                className="absolute -inset-px rounded-xl pointer-events-none"
+                style={{ border: "1px solid #222" }}
+              />
+              {/* Viewport label */}
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                <span className="font-mono text-[10px] text-[#444] uppercase tracking-wider">
+                  {viewport} — {frameWidth}px
+                </span>
+              </div>
+              {/* Content */}
+              <div
+                className="overflow-hidden rounded-xl bg-[#0A0A0A]"
+                style={{ width: frameWidth }}
+                data-viewport-frame={viewport}
+              >
+                {BlockComponent ? (
+                  <div key={animKey} className="variant-enter">
+                    <BlockComponent />
+                  </div>
+                ) : null}
+              </div>
             </div>
-          ) : null}
+          ) : (
+            /* Full width */
+            BlockComponent ? (
+              <div key={animKey} className="variant-enter">
+                <BlockComponent />
+              </div>
+            ) : null
+          )}
         </main>
 
         {/* JSON panel */}

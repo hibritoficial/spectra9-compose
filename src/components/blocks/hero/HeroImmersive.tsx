@@ -3,7 +3,7 @@ import ContentLabel from "../../ContentLabel";
 
 export default function HeroImmersive() {
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+    <section className="hero-immersive relative w-full h-screen flex items-center justify-center overflow-hidden">
       {/* Full-screen visual background */}
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
@@ -31,11 +31,8 @@ export default function HeroImmersive() {
 
         {/* Headline */}
         <h1
-          className="font-serif text-white leading-[1.05] tracking-[-0.03em] mb-8 anim-headline"
-          style={{
-            fontSize: "clamp(48px, 8vw, 96px)",
-            textShadow: "0 2px 40px rgba(0,0,0,0.5)",
-          }}
+          className="hero-headline font-serif text-white leading-[1.05] tracking-[-0.03em] mb-8 anim-headline"
+          style={{ textShadow: "0 2px 40px rgba(0,0,0,0.5)" }}
         >
           Lorem ipsum dolor sit amet
         </h1>
@@ -54,7 +51,7 @@ export default function HeroImmersive() {
         <div className="content-label-container mb-2">
           <ContentLabel text="CTA de ação principal" />
         </div>
-        <button className="px-10 py-5 bg-white text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-scale-in">
+        <button className="hero-cta-btn px-10 py-5 bg-white text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-scale-in">
           Descobrir mais
         </button>
       </div>

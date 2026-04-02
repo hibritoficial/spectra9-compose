@@ -232,3 +232,117 @@
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(51, 51, 51, 0.5);
 }
+
+/* ========================================
+   VIEWPORT FRAME — Container context
+   ======================================== */
+
+[data-viewport-frame] {
+  container-type: inline-size;
+  container-name: viewport;
+}
+
+/* ========================================
+   RESPONSIVE — Desktop defaults (no container)
+   ======================================== */
+
+.hero-statement .hero-headline { font-size: clamp(64px, 10vw, 120px); }
+.hero-product .hero-headline { font-size: clamp(48px, 7vw, 96px); }
+.hero-split .hero-headline { font-size: clamp(40px, 5.5vw, 80px); }
+.hero-video .hero-headline { font-size: clamp(48px, 8vw, 96px); }
+.hero-immersive .hero-headline { font-size: clamp(48px, 8vw, 96px); }
+
+.hero-spacer { height: 200px; }
+
+.hero-product-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.66fr;
+  gap: 64px;
+}
+
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.hero-split-visual { min-height: 100vh; }
+
+/* ========================================
+   RESPONSIVE — Inside viewport frame (container queries)
+   ======================================== */
+
+/* Override font-sizes inside container to use cqi */
+[data-viewport-frame] .hero-statement .hero-headline { font-size: clamp(48px, 12cqi, 120px); }
+[data-viewport-frame] .hero-product .hero-headline { font-size: clamp(36px, 9cqi, 96px); }
+[data-viewport-frame] .hero-split .hero-headline { font-size: clamp(32px, 8cqi, 80px); }
+[data-viewport-frame] .hero-video .hero-headline { font-size: clamp(36px, 10cqi, 96px); }
+[data-viewport-frame] .hero-immersive .hero-headline { font-size: clamp(36px, 10cqi, 96px); }
+
+/* ========================================
+   RESPONSIVE — Tablet (< 800px container)
+   ======================================== */
+
+@container viewport (max-width: 800px) {
+  .hero-statement .hero-headline { font-size: clamp(36px, 9cqi, 72px) !important; }
+  .hero-product .hero-headline { font-size: clamp(32px, 8cqi, 60px) !important; }
+  .hero-split .hero-headline { font-size: clamp(28px, 7cqi, 56px) !important; }
+  .hero-video .hero-headline,
+  .hero-immersive .hero-headline { font-size: clamp(32px, 9cqi, 64px) !important; }
+
+  .hero-spacer { height: 80px; }
+
+  .hero-product-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .hero-product-media { order: -1; }
+  .hero-product-media .media-placeholder { height: 300px !important; }
+
+  .hero-split {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .hero-split-text { padding: 48px 32px; }
+  .hero-split-visual { min-height: auto; height: 50vh; }
+
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-ctas button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ========================================
+   RESPONSIVE — Mobile (< 400px container)
+   ======================================== */
+
+@container viewport (max-width: 400px) {
+  .hero-headline { font-size: clamp(28px, 10cqi, 44px) !important; }
+
+  .hero-spacer { height: 48px; }
+
+  .hero-statement { padding: 80px 20px; }
+
+  .hero-product-grid {
+    padding: 80px 20px;
+    gap: 28px;
+  }
+
+  .hero-product-media .media-placeholder { height: 200px !important; }
+
+  .hero-split-text { padding: 40px 20px; }
+  .hero-split-visual { height: 40vh; }
+
+  .hero-cta-btn {
+    padding: 16px 32px;
+    font-size: 14px;
+  }
+}

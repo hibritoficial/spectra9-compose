@@ -3,7 +3,7 @@ import ContentLabel from "../../ContentLabel";
 
 export default function HeroVideo() {
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+    <section className="hero-video relative w-full h-screen flex items-center justify-center overflow-hidden">
       {/* Video background */}
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
@@ -23,10 +23,7 @@ export default function HeroVideo() {
         </div>
 
         {/* Headline */}
-        <h1
-          className="font-serif text-white leading-[1.05] tracking-[-0.03em] mb-8 anim-headline"
-          style={{ fontSize: "clamp(48px, 8vw, 96px)" }}
-        >
+        <h1 className="hero-headline font-serif text-white leading-[1.05] tracking-[-0.03em] mb-8 anim-headline">
           Lorem ipsum dolor sit amet
         </h1>
 
@@ -45,7 +42,7 @@ export default function HeroVideo() {
         </div>
 
         {/* CTA */}
-        <button className="px-10 py-5 bg-white text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-scale-in">
+        <button className="hero-cta-btn px-10 py-5 bg-white text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-scale-in">
           Assistir vídeo
         </button>
       </div>
@@ -53,13 +50,7 @@ export default function HeroVideo() {
       {/* Play/Pause indicator */}
       <div className="absolute bottom-8 right-8 z-10 flex items-center gap-2 anim-fade-in" style={{ animationDelay: "1s" }}>
         <div className="w-10 h-10 border border-[#555] rounded-full flex items-center justify-center hover:border-[#888] transition-colors duration-150">
-          <svg
-            width="12"
-            height="14"
-            viewBox="0 0 12 14"
-            fill="none"
-            className="ml-0.5"
-          >
+          <svg width="12" height="14" viewBox="0 0 12 14" fill="none" className="ml-0.5">
             <path d="M0 0L12 7L0 14V0Z" fill="#888" />
           </svg>
         </div>

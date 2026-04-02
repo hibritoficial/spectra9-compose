@@ -2,35 +2,46 @@
 
 import { blockRegistry } from "./blocks/registry";
 
+export type ViewportMode = "desktop" | "tablet" | "mobile";
+
+const viewportConfig: Record<ViewportMode, { width: number; label: string }> = {
+  desktop: { width: 1440, label: "Desktop" },
+  tablet: { width: 768, label: "Tablet" },
+  mobile: { width: 375, label: "Mobile" },
+};
+
 interface ControlBarProps {
   activePurpose: string;
   activeVariantIndex: number;
   showJson: boolean;
+  viewport: ViewportMode;
   onPurposeChange: (purposeId: string) => void;
   onVariantChange: (index: number) => void;
   onToggleJson: () => void;
+  onViewportChange: (mode: ViewportMode) => void;
 }
 
 export default function ControlBar({
   activePurpose,
   activeVariantIndex,
   showJson,
+  viewport,
   onPurposeChange,
   onVariantChange,
   onToggleJson,
+  onViewportChange,
 }: ControlBarProps) {
   const purpose = blockRegistry.find((p) => p.id === activePurpose);
   const totalVariants = purpose?.variants.length ?? 0;
   const currentVariant = purpose?.variants[activeVariantIndex];
 
   return (
-    <header className="control-bar fixed top-0 left-0 right-0 z-50 h-14 flex items-center px-5 gap-6">
+    <header className="control-bar fixed top-0 left-0 right-0 z-50 h-14 flex items-center px-5 gap-4">
       {/* Logo */}
       <span className="font-mono text-[12px] text-[#666] tracking-[0.2em] uppercase shrink-0">
         COMPOSE
       </span>
 
-      {/* Divider */}
       <div className="w-px h-5 bg-[#333]" />
 
       {/* Purpose selector */}
@@ -50,7 +61,6 @@ export default function ControlBar({
         ))}
       </div>
 
-      {/* Divider */}
       <div className="w-px h-5 bg-[#333]" />
 
       {/* Variant navigation */}
@@ -80,6 +90,26 @@ export default function ControlBar({
         >
           →
         </button>
+      </div>
+
+      <div className="w-px h-5 bg-[#333]" />
+
+      {/* Viewport toggle */}
+      <div className="flex gap-1" data-testid="viewport-toggle">
+        {(Object.keys(viewportConfig) as ViewportMode[]).map((mode) => (
+          <button
+            key={mode}
+            onClick={() => onViewportChange(mode)}
+            data-viewport={mode}
+            className={`px-2.5 py-1 rounded font-mono text-[11px] transition-colors duration-150 ${
+              viewport === mode
+                ? "bg-[#222] text-[#ddd]"
+                : "text-[#555] hover:text-[#888]"
+            }`}
+          >
+            {viewportConfig[mode].width}
+          </button>
+        ))}
       </div>
 
       {/* Spacer */}
