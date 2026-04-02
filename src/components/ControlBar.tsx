@@ -2,13 +2,14 @@
 
 import { blockRegistry } from "./blocks/registry";
 
-export type ViewportMode = "desktop" | "tablet" | "mobile";
+export type ViewportMode = "desktop" | "tablet" | "mobile" | "split";
 
-const viewportConfig: Record<ViewportMode, { width: number; label: string }> = {
-  desktop: { width: 1440, label: "Desktop" },
-  tablet: { width: 768, label: "Tablet" },
-  mobile: { width: 375, label: "Mobile" },
-};
+const viewportButtons: { mode: ViewportMode; label: string }[] = [
+  { mode: "desktop", label: "1440" },
+  { mode: "tablet", label: "768" },
+  { mode: "mobile", label: "375" },
+  { mode: "split", label: "Split" },
+];
 
 interface ControlBarProps {
   activePurpose: string;
@@ -96,7 +97,7 @@ export default function ControlBar({
 
       {/* Viewport toggle */}
       <div className="flex gap-1" data-testid="viewport-toggle">
-        {(Object.keys(viewportConfig) as ViewportMode[]).map((mode) => (
+        {viewportButtons.map(({ mode, label }) => (
           <button
             key={mode}
             onClick={() => onViewportChange(mode)}
@@ -107,7 +108,7 @@ export default function ControlBar({
                 : "text-[#555] hover:text-[#888]"
             }`}
           >
-            {viewportConfig[mode].width}
+            {label}
           </button>
         ))}
       </div>
