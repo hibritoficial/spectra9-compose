@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import ControlBar from "../components/ControlBar";
 import { blockRegistry } from "../components/blocks/registry";
 import {
@@ -8,7 +8,7 @@ import {
   HeroProduct,
   HeroSplit,
   HeroVideo,
-  HeroData,
+  HeroImmersive,
 } from "../components/blocks/hero";
 
 const heroComponents: Record<string, React.ComponentType> = {
@@ -16,13 +16,15 @@ const heroComponents: Record<string, React.ComponentType> = {
   "hero-product": HeroProduct,
   "hero-split": HeroSplit,
   "hero-video": HeroVideo,
-  "hero-data": HeroData,
+  "hero-immersive": HeroImmersive,
 };
 
 export default function Home() {
   const [activePurpose, setActivePurpose] = useState("hero");
   const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [showJson, setShowJson] = useState(false);
+  const [animKey, setAnimKey] = useState(0);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const purpose = blockRegistry.find((p) => p.id === activePurpose);
   const currentVariant = purpose?.variants[activeVariantIndex];
@@ -33,7 +35,16 @@ export default function Home() {
   const handlePurposeChange = useCallback((purposeId: string) => {
     setActivePurpose(purposeId);
     setActiveVariantIndex(0);
+    setAnimKey((k) => k + 1);
   }, []);
+
+  const handleVariantChange = useCallback(
+    (index: number) => {
+      setActiveVariantIndex(index);
+      setAnimKey((k) => k + 1);
+    },
+    []
+  );
 
   // Keyboard navigation
   useEffect(() => {
@@ -43,10 +54,18 @@ export default function Home() {
 
       if (e.key === "ArrowLeft") {
         e.preventDefault();
-        setActiveVariantIndex((i) => (i - 1 + total) % total);
+        setActiveVariantIndex((i) => {
+          const next = (i - 1 + total) % total;
+          setAnimKey((k) => k + 1);
+          return next;
+        });
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
-        setActiveVariantIndex((i) => (i + 1) % total);
+        setActiveVariantIndex((i) => {
+          const next = (i + 1) % total;
+          setAnimKey((k) => k + 1);
+          return next;
+        });
       } else if (e.key === "j" || e.key === "J") {
         setShowJson((v) => !v);
       }
@@ -63,7 +82,7 @@ export default function Home() {
         activeVariantIndex={activeVariantIndex}
         showJson={showJson}
         onPurposeChange={handlePurposeChange}
-        onVariantChange={setActiveVariantIndex}
+        onVariantChange={handleVariantChange}
         onToggleJson={() => setShowJson((v) => !v)}
       />
 
@@ -71,11 +90,16 @@ export default function Home() {
       <div className="flex">
         {/* Block preview */}
         <main
+          ref={mainRef}
           className={`pt-14 transition-all duration-300 ${
             showJson ? "w-[calc(100%-400px)]" : "w-full"
           }`}
         >
-          {BlockComponent ? <BlockComponent /> : null}
+          {BlockComponent ? (
+            <div key={animKey} className="variant-enter">
+              <BlockComponent />
+            </div>
+          ) : null}
         </main>
 
         {/* JSON panel */}
