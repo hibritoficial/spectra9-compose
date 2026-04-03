@@ -53,8 +53,8 @@ export default function HeroStatement() {
           blandit tempus consequat viverra.
         </p>
 
-        {/* Gap: sub to CTAs */}
-        <div style={{ height: 56 }} />
+        {/* Gap: sub to CTAs — tighter for optical center */}
+        <div style={{ height: 40 }} />
 
         <div className="content-label-container mb-3">
           <ContentLabel text="CTAs — acao principal + acao secundaria" />

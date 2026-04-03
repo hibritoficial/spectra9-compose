@@ -376,6 +376,31 @@
 [data-viewport-frame] .hero-immersive .hero-headline { font-size: clamp(36px, 10cqi, 96px); }
 
 /* ========================================
+   RESPONSIVE NAVBAR — container-aware
+   ======================================== */
+
+@container viewport (max-width: 800px) {
+  .nav-links-desktop { gap: 16px !important; }
+  .nav-links-desktop span { font-size: 13px !important; }
+}
+
+@container viewport (max-width: 400px) {
+  .nav-links-desktop { display: none !important; }
+  .nav-hamburger { display: flex !important; }
+}
+
+/* Also handle native viewport for non-framed mode */
+@media (max-width: 500px) {
+  .nav-links-desktop { display: none !important; }
+  .nav-hamburger { display: flex !important; }
+}
+
+@media (min-width: 501px) and (max-width: 800px) {
+  .nav-links-desktop { gap: 16px !important; }
+  .nav-links-desktop span { font-size: 13px !important; }
+}
+
+/* ========================================
    RESPONSIVE — Tablet (< 800px container)
    ======================================== */
 

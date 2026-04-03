@@ -8,12 +8,11 @@ export default function HeroSplit() {
       {/* Gradient mesh — diagonal, one half lighter */}
       <div className="absolute inset-0 z-0 hero-split-mesh" />
 
-      {/* Text half */}
-      <div className="hero-split-text relative z-10 flex flex-col justify-center" style={{ padding: "80px 80px 80px 80px" }}>
-        <SimulatedNavbar />
+      {/* Navbar — absolute, spanning full width ABOVE both columns */}
+      <SimulatedNavbar absolute />
 
-        <div style={{ height: 48 }} />
-
+      {/* Text half — push down for navbar */}
+      <div className="hero-split-text relative z-10 flex flex-col justify-center" style={{ padding: "96px 80px 80px 80px" }}>
         <div className="content-label-container mb-3">
           <ContentLabel text="Headline principal — proposta ou manifesto" />
         </div>
@@ -54,7 +53,7 @@ export default function HeroSplit() {
         </div>
       </div>
 
-      {/* Visual half — with subtle border separating halves */}
+      {/* Visual half — with subtle border */}
       <div
         className="hero-split-visual relative flex items-center justify-center anim-media-parallax"
         style={{ borderLeft: "1px solid rgba(255,255,255,0.04)" }}

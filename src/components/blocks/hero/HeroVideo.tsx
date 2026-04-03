@@ -5,7 +5,7 @@ import SimulatedNavbar from "../../SimulatedNavbar";
 export default function HeroVideo() {
   return (
     <section className="hero-video hero-section-end relative w-full h-screen flex flex-col overflow-hidden">
-      {/* Full-screen video placeholder — fills entire section */}
+      {/* Full-screen video placeholder */}
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
           label="full-screen looping video"
@@ -23,25 +23,84 @@ export default function HeroVideo() {
               "linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.6) 100%)",
           }}
         />
+        {/* Scan lines — stronger (0.05 opacity) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)",
+            pointerEvents: "none",
+          }}
+        />
       </div>
 
-      {/* Central play icon — fades when content appears */}
-      <div className="absolute inset-0 z-[5] flex items-center justify-center pointer-events-none">
+      {/* LETTERBOX BAR — TOP */}
+      <div
+        className="absolute top-0 left-0 right-0 z-[6]"
+        style={{ height: 40, background: "#000" }}
+      />
+
+      {/* LETTERBOX BAR — BOTTOM (with progress bar above it) */}
+      <div
+        className="absolute bottom-0 left-0 right-0 z-[6]"
+        style={{ height: 40, background: "#000" }}
+      />
+
+      {/* VIDEO PROGRESS BAR — just above bottom letterbox */}
+      <div
+        className="absolute left-0 right-0 z-[7] flex items-center justify-center"
+        style={{ bottom: 40 }}
+      >
         <div
-          className="anim-fade-in"
+          className="relative"
           style={{
-            opacity: 0.15,
-            animationDelay: "0s",
+            width: "60%",
+            height: 3,
+            background: "rgba(255,255,255,0.1)",
+            borderRadius: 2,
           }}
         >
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <circle cx="40" cy="40" r="39" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-            <path d="M32 24L56 40L32 56V24Z" fill="rgba(255,255,255,0.3)" />
+          {/* Filled portion (~35%) */}
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: "35%",
+              height: "100%",
+              background: "rgba(255,255,255,0.35)",
+              borderRadius: 2,
+            }}
+          />
+          {/* Position dot */}
+          <div
+            style={{
+              position: "absolute",
+              left: "35%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 9,
+              height: 9,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.5)",
+            }}
+          />
+        </div>
+      </div>
+
+      {/* GHOST PLAY ICON — 64px, opacity 0.15 */}
+      <div className="absolute inset-0 z-[5] flex items-center justify-center pointer-events-none">
+        <div className="anim-fade-in" style={{ animationDelay: "0s" }}>
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" style={{ opacity: 0.15 }}>
+            <circle cx="50" cy="50" r="48" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+            <path d="M40 28L72 50L40 72V28Z" fill="rgba(255,255,255,0.35)" />
           </svg>
         </div>
       </div>
 
-      <SimulatedNavbar />
+      <div className="relative z-10" style={{ marginTop: 40 }}>
+        <SimulatedNavbar />
+      </div>
 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center max-w-[900px] mx-auto px-20">
         <div className="content-label-container mb-4">
@@ -73,11 +132,7 @@ export default function HeroVideo() {
 
         <button
           className="hero-cta-btn font-sans text-[15px] font-medium rounded-full tracking-wide anim-scale-in flex items-center gap-3"
-          style={{
-            padding: "18px 40px",
-            background: "white",
-            color: "#0A0A0A",
-          }}
+          style={{ padding: "18px 40px", background: "white", color: "#0A0A0A" }}
         >
           <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
             <path d="M0 0L14 8L0 16V0Z" fill="#0A0A0A" />
@@ -86,8 +141,8 @@ export default function HeroVideo() {
         </button>
       </div>
 
-      {/* Play/Pause corner control */}
-      <div className="absolute bottom-8 right-8 z-10 anim-fade-in" style={{ animationDelay: "1s" }}>
+      {/* Corner play/pause */}
+      <div className="absolute z-[8] anim-fade-in" style={{ bottom: 56, right: 32, animationDelay: "1s" }}>
         <div
           className="w-11 h-11 rounded-full flex items-center justify-center cursor-default"
           style={{
