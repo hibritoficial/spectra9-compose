@@ -2,7 +2,9 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import ControlBar, { type ViewportMode } from "../components/ControlBar";
+import { ComposeProvider, type HintsMode } from "../components/ComposeContext";
 import { blockRegistry } from "../components/blocks/registry";
+import AIGuide from "../components/chat/AIGuide";
 import {
   HeroStatement,
   HeroProduct,
@@ -43,22 +45,17 @@ function DeviceFrame({
   return (
     <div
       className="relative transition-all duration-300 shrink-0"
-      style={{
-        width: width * (scale ?? 1),
-      }}
+      style={{ width: width * (scale ?? 1) }}
     >
-      {/* Device border */}
       <div
         className="absolute -inset-px rounded-xl pointer-events-none"
         style={{ border: "1px solid #222" }}
       />
-      {/* Viewport label */}
       <div className="absolute -top-6 left-1/2 -translate-x-1/2">
         <span className="font-mono text-[10px] text-[#444] uppercase tracking-wider whitespace-nowrap">
           {label}
         </span>
       </div>
-      {/* Content — scaled */}
       <div
         className="overflow-hidden rounded-xl bg-[#0A0A0A]"
         style={{
@@ -80,7 +77,9 @@ export default function Home() {
   const [activePurpose, setActivePurpose] = useState("hero");
   const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [showJson, setShowJson] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
   const [viewport, setViewport] = useState<ViewportMode>("desktop");
+  const [hints, setHints] = useState<HintsMode>("hover");
   const [animKey, setAnimKey] = useState(0);
   const mainRef = useRef<HTMLDivElement>(null);
 
@@ -92,6 +91,9 @@ export default function Home() {
 
   const isFramed = viewport !== "desktop";
   const isSplit = viewport === "split";
+
+  // Compute main width accounting for sidebars
+  const rightPanelWidth = showJson ? 400 : showGuide ? 380 : 0;
 
   const handlePurposeChange = useCallback((purposeId: string) => {
     setActivePurpose(purposeId);
@@ -109,9 +111,31 @@ export default function Home() {
     setAnimKey((k) => k + 1);
   }, []);
 
-  // Keyboard navigation
+  // Close one panel when opening the other
+  const toggleJson = useCallback(() => {
+    setShowJson((v) => {
+      if (!v) setShowGuide(false);
+      return !v;
+    });
+  }, []);
+
+  const toggleGuide = useCallback(() => {
+    setShowGuide((v) => {
+      if (!v) setShowJson(false);
+      return !v;
+    });
+  }, []);
+
+  // Keyboard shortcuts
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
+      // Ignore when typing in input fields
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
+
       if (!purpose) return;
       const total = purpose.variants.length;
 
@@ -130,91 +154,119 @@ export default function Home() {
           return next;
         });
       } else if (e.key === "j" || e.key === "J") {
-        setShowJson((v) => !v);
+        toggleJson();
+      } else if (e.key === "g" || e.key === "G") {
+        toggleGuide();
+      } else if (e.key === "h" || e.key === "H") {
+        setHints((h) => {
+          const order: HintsMode[] = ["hover", "all", "clean"];
+          const idx = order.indexOf(h);
+          return order[(idx + 1) % order.length];
+        });
       }
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [purpose]);
+  }, [purpose, toggleJson, toggleGuide]);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
-      <ControlBar
-        activePurpose={activePurpose}
-        activeVariantIndex={activeVariantIndex}
-        showJson={showJson}
-        viewport={viewport}
-        onPurposeChange={handlePurposeChange}
-        onVariantChange={handleVariantChange}
-        onToggleJson={() => setShowJson((v) => !v)}
-        onViewportChange={handleViewportChange}
-      />
+    <ComposeProvider hints={hints}>
+      <div className="min-h-screen bg-[#0A0A0A]">
+        <ControlBar
+          activePurpose={activePurpose}
+          activeVariantIndex={activeVariantIndex}
+          showJson={showJson}
+          showGuide={showGuide}
+          viewport={viewport}
+          hints={hints}
+          onPurposeChange={handlePurposeChange}
+          onVariantChange={handleVariantChange}
+          onToggleJson={toggleJson}
+          onToggleGuide={toggleGuide}
+          onViewportChange={handleViewportChange}
+          onHintsChange={setHints}
+        />
 
-      {/* Content area */}
-      <div className="flex">
-        <main
-          ref={mainRef}
-          className={`pt-14 transition-all duration-300 ${
-            showJson ? "w-[calc(100%-400px)]" : "w-full"
-          } ${isFramed ? "flex justify-center" : ""} ${
-            isSplit ? "items-start gap-8 px-8 py-8 overflow-x-auto" : ""
-          }`}
-        >
-          {isSplit && BlockComponent ? (
-            /* Split view — desktop + mobile side by side */
-            <>
+        {/* Content area */}
+        <div className="flex">
+          <main
+            ref={mainRef}
+            className={`pt-14 transition-all duration-300 ${
+              isFramed ? "flex justify-center" : ""
+            } ${isSplit ? "items-start gap-8 px-8 py-8 overflow-x-auto" : ""}`}
+            style={{
+              width: rightPanelWidth
+                ? `calc(100% - ${rightPanelWidth}px)`
+                : "100%",
+            }}
+          >
+            {isSplit && BlockComponent ? (
+              <>
+                <DeviceFrame
+                  width={960}
+                  label="Desktop — 960px"
+                  scale={0.65}
+                  viewport="desktop"
+                  animKey={animKey}
+                >
+                  <BlockComponent />
+                </DeviceFrame>
+                <DeviceFrame
+                  width={375}
+                  label="Mobile — 375px"
+                  scale={0.65}
+                  viewport="mobile"
+                  animKey={animKey + 1000}
+                >
+                  <BlockComponent />
+                </DeviceFrame>
+              </>
+            ) : isFramed && !isSplit ? (
               <DeviceFrame
-                width={960}
-                label="Desktop — 960px"
-                scale={0.65}
-                viewport="desktop"
+                width={
+                  viewportWidths[viewport as Exclude<ViewportMode, "split">]
+                }
+                label={`${viewport} — ${viewportWidths[viewport as Exclude<ViewportMode, "split">]}px`}
+                viewport={viewport}
                 animKey={animKey}
               >
-                <BlockComponent />
+                {BlockComponent ? <BlockComponent /> : <div />}
               </DeviceFrame>
-              <DeviceFrame
-                width={375}
-                label="Mobile — 375px"
-                scale={0.65}
-                viewport="mobile"
-                animKey={animKey + 1000}
-              >
-                <BlockComponent />
-              </DeviceFrame>
-            </>
-          ) : isFramed && !isSplit ? (
-            /* Single device frame (tablet/mobile) */
-            <DeviceFrame
-              width={viewportWidths[viewport as Exclude<ViewportMode, "split">]}
-              label={`${viewport} — ${viewportWidths[viewport as Exclude<ViewportMode, "split">]}px`}
-              viewport={viewport}
-              animKey={animKey}
-            >
-              {BlockComponent ? <BlockComponent /> : <div />}
-            </DeviceFrame>
-          ) : (
-            /* Full width desktop */
-            BlockComponent ? (
+            ) : BlockComponent ? (
               <div key={animKey} className="variant-enter">
                 <BlockComponent />
               </div>
-            ) : null
-          )}
-        </main>
+            ) : null}
+          </main>
 
-        {/* JSON panel */}
-        {showJson && currentVariant && (
-          <aside className="json-viewer fixed top-14 right-0 w-[400px] h-[calc(100vh-56px)] p-6 z-40">
-            <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-[11px] text-[#555] uppercase tracking-wider">
-                Schema — {currentVariant.name}
-              </span>
-            </div>
-            <pre>{JSON.stringify(currentVariant.schema, null, 2)}</pre>
-          </aside>
-        )}
+          {/* JSON panel */}
+          {showJson && currentVariant && (
+            <aside className="json-viewer fixed top-14 right-0 w-[400px] h-[calc(100vh-56px)] p-6 z-40">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-mono text-[11px] text-[#555] uppercase tracking-wider">
+                  Schema — {currentVariant.name}
+                </span>
+                <button
+                  onClick={toggleJson}
+                  className="text-[#555] hover:text-[#999] transition-colors duration-150 text-[16px]"
+                >
+                  &times;
+                </button>
+              </div>
+              <pre>{JSON.stringify(currentVariant.schema, null, 2)}</pre>
+            </aside>
+          )}
+
+          {/* AI Guide panel */}
+          <AIGuide
+            open={showGuide}
+            onClose={toggleGuide}
+            activeVariant={currentVariant?.name ?? ""}
+            viewport={viewport}
+          />
+        </div>
       </div>
-    </div>
+    </ComposeProvider>
   );
 }

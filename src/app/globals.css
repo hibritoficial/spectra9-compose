@@ -234,6 +234,30 @@
 }
 
 /* ========================================
+   HINTS MODES
+   ======================================== */
+
+/* Clean mode: hide placeholders borders/labels, show as solid dark */
+.media-placeholder--clean {
+  border: none !important;
+  cursor: default;
+  color: transparent;
+}
+
+.media-placeholder--clean span {
+  display: none;
+}
+
+.media-placeholder--clean::after {
+  display: none !important;
+}
+
+/* All mode: show tooltip always */
+.media-placeholder--all::after {
+  opacity: 0.8 !important;
+}
+
+/* ========================================
    VIEWPORT FRAME — Container context
    ======================================== */
 

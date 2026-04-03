@@ -1,6 +1,7 @@
 "use client";
 
 import { blockRegistry } from "./blocks/registry";
+import type { HintsMode } from "./ComposeContext";
 
 export type ViewportMode = "desktop" | "tablet" | "mobile" | "split";
 
@@ -11,30 +12,50 @@ const viewportButtons: { mode: ViewportMode; label: string }[] = [
   { mode: "split", label: "Split" },
 ];
 
+const hintsIcons: Record<HintsMode, { icon: string; title: string }> = {
+  clean: { icon: "\u29B8", title: "Clean — sem hints" },
+  hover: { icon: "\u25CE", title: "Hover — hints no hover" },
+  all: { icon: "\u25C9", title: "All — tudo visivel" },
+};
+
 interface ControlBarProps {
   activePurpose: string;
   activeVariantIndex: number;
   showJson: boolean;
+  showGuide: boolean;
   viewport: ViewportMode;
+  hints: HintsMode;
   onPurposeChange: (purposeId: string) => void;
   onVariantChange: (index: number) => void;
   onToggleJson: () => void;
+  onToggleGuide: () => void;
   onViewportChange: (mode: ViewportMode) => void;
+  onHintsChange: (mode: HintsMode) => void;
 }
 
 export default function ControlBar({
   activePurpose,
   activeVariantIndex,
   showJson,
+  showGuide,
   viewport,
+  hints,
   onPurposeChange,
   onVariantChange,
   onToggleJson,
+  onToggleGuide,
   onViewportChange,
+  onHintsChange,
 }: ControlBarProps) {
   const purpose = blockRegistry.find((p) => p.id === activePurpose);
   const totalVariants = purpose?.variants.length ?? 0;
   const currentVariant = purpose?.variants[activeVariantIndex];
+
+  const cycleHints = () => {
+    const order: HintsMode[] = ["hover", "all", "clean"];
+    const idx = order.indexOf(hints);
+    onHintsChange(order[(idx + 1) % order.length]);
+  };
 
   return (
     <header className="control-bar fixed top-0 left-0 right-0 z-50 h-14 flex items-center px-5 gap-4">
@@ -75,11 +96,12 @@ export default function ControlBar({
           className="w-7 h-7 flex items-center justify-center rounded border border-[#333] text-[#888] hover:border-[#555] hover:text-[#ccc] transition-colors duration-150 text-[14px]"
           aria-label="Previous variant"
         >
-          ←
+          &larr;
         </button>
 
         <span className="font-mono text-[12px] text-[#888] min-w-[140px] text-center">
-          {currentVariant?.name ?? "—"} ({activeVariantIndex + 1}/{totalVariants})
+          {currentVariant?.name ?? "\u2014"} ({activeVariantIndex + 1}/
+          {totalVariants})
         </span>
 
         <button
@@ -89,7 +111,7 @@ export default function ControlBar({
           className="w-7 h-7 flex items-center justify-center rounded border border-[#333] text-[#888] hover:border-[#555] hover:text-[#ccc] transition-colors duration-150 text-[14px]"
           aria-label="Next variant"
         >
-          →
+          &rarr;
         </button>
       </div>
 
@@ -113,6 +135,23 @@ export default function ControlBar({
         ))}
       </div>
 
+      <div className="w-px h-5 bg-[#333]" />
+
+      {/* Hints toggle */}
+      <button
+        onClick={cycleHints}
+        title={hintsIcons[hints].title}
+        className={`w-8 h-8 flex items-center justify-center rounded transition-colors duration-150 text-[16px] ${
+          hints === "clean"
+            ? "text-[#444]"
+            : hints === "all"
+            ? "text-[#ddd] bg-[#222]"
+            : "text-[#888]"
+        }`}
+      >
+        {hintsIcons[hints].icon}
+      </button>
+
       {/* Spacer */}
       <div className="flex-1" />
 
@@ -126,6 +165,19 @@ export default function ControlBar({
         }`}
       >
         JSON
+      </button>
+
+      {/* Guide sparkle button */}
+      <button
+        onClick={onToggleGuide}
+        className={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors duration-150 text-[16px] ${
+          showGuide
+            ? "bg-[#C75A3A]/15 text-[#C75A3A] border border-[#C75A3A]/40"
+            : "border border-[#333] text-[#666] hover:border-[#555] hover:text-[#C75A3A]"
+        }`}
+        title="Compose Guide (G)"
+      >
+        &#x2726;
       </button>
     </header>
   );

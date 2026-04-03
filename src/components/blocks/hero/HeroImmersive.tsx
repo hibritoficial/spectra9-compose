@@ -1,19 +1,18 @@
 import MediaPlaceholder from "../../MediaPlaceholder";
 import ContentLabel from "../../ContentLabel";
+import SimulatedNavbar from "../../SimulatedNavbar";
 
 export default function HeroImmersive() {
   return (
-    <section className="hero-immersive relative w-full h-screen flex items-center justify-center overflow-hidden">
-      {/* Full-screen visual background */}
+    <section className="hero-immersive relative w-full h-screen flex flex-col overflow-hidden">
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
-          label="imagem ou vídeo full-bleed"
-          hint="Fotografia premium full-bleed, vídeo slow-motion, ou composição 3D. A imagem deve comunicar a essência da marca antes de qualquer texto ser lido. Overlay gradient escuro (60-70% opacity) garante legibilidade."
+          label="imagem ou video full-bleed"
+          hint="Fotografia premium full-bleed, video slow-motion, ou composicao 3D. A imagem deve comunicar a essencia da marca antes de qualquer texto ser lido."
           width="100%"
           height="100%"
           className="!rounded-none !border-none"
         />
-        {/* Gradient overlay for legibility */}
         <div
           className="absolute inset-0 anim-overlay"
           style={{
@@ -23,13 +22,13 @@ export default function HeroImmersive() {
         />
       </div>
 
-      {/* Text content overlay */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-[900px] px-8">
+      <SimulatedNavbar />
+
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center max-w-[900px] mx-auto px-8">
         <div className="content-label-container mb-3">
           <ContentLabel text="Seu headline principal — a imagem fala primeiro" />
         </div>
 
-        {/* Headline */}
         <h1
           className="hero-headline font-serif text-white leading-[1.05] tracking-[-0.03em] mb-8 anim-headline"
           style={{ textShadow: "0 2px 40px rgba(0,0,0,0.5)" }}
@@ -38,18 +37,16 @@ export default function HeroImmersive() {
         </h1>
 
         <div className="content-label-container mb-2">
-          <ContentLabel text="Descrição curta — 1 a 2 frases de apoio" />
+          <ContentLabel text="Descricao curta — 1 a 2 frases de apoio" />
         </div>
 
-        {/* Subheadline */}
         <p className="font-sans text-[18px] text-[#ccc] leading-[1.7] max-w-[520px] mb-12 anim-sub">
           Curabitur blandit tempus consequat. Donec pede justo, fringilla vel,
           aliquet nec, vulputate eget arcu.
         </p>
 
-        {/* CTA */}
         <div className="content-label-container mb-2">
-          <ContentLabel text="CTA de ação principal" />
+          <ContentLabel text="CTA de acao principal" />
         </div>
         <button className="hero-cta-btn px-10 py-5 bg-white text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-scale-in">
           Descobrir mais
