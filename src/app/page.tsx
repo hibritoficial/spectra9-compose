@@ -12,13 +12,39 @@ import {
   HeroVideo,
   HeroImmersive,
 } from "../components/blocks/hero";
+import {
+  OverviewCarousel,
+  OverviewIcons,
+  OverviewTabs,
+  OverviewNumbers,
+} from "../components/blocks/overview";
+import {
+  FeatureAlternating,
+  FeatureScrollStory,
+  FeatureGrid,
+} from "../components/blocks/feature";
+import {
+  ProofTestimonials,
+  ProofLogos,
+  ProofStats,
+} from "../components/blocks/proof";
 
-const heroComponents: Record<string, React.ComponentType> = {
+const allComponents: Record<string, React.ComponentType> = {
   "hero-statement": HeroStatement,
   "hero-product": HeroProduct,
   "hero-split": HeroSplit,
   "hero-video": HeroVideo,
   "hero-immersive": HeroImmersive,
+  "overview-carousel": OverviewCarousel,
+  "overview-icons": OverviewIcons,
+  "overview-tabs": OverviewTabs,
+  "overview-numbers": OverviewNumbers,
+  "feature-alternating": FeatureAlternating,
+  "feature-scroll-story": FeatureScrollStory,
+  "feature-grid": FeatureGrid,
+  "proof-testimonials": ProofTestimonials,
+  "proof-logos": ProofLogos,
+  "proof-stats": ProofStats,
 };
 
 const viewportWidths: Record<Exclude<ViewportMode, "split">, number> = {
@@ -86,7 +112,7 @@ export default function Home() {
   const purpose = blockRegistry.find((p) => p.id === activePurpose);
   const currentVariant = purpose?.variants[activeVariantIndex];
   const BlockComponent = currentVariant
-    ? heroComponents[currentVariant.id]
+    ? allComponents[currentVariant.id]
     : null;
 
   const isFramed = viewport !== "desktop";

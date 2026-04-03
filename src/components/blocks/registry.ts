@@ -163,4 +163,82 @@ export const blockRegistry: BlockPurpose[] = [
       },
     ],
   },
+  {
+    id: "overview",
+    label: "Overview",
+    variants: [
+      {
+        id: "overview-carousel",
+        name: "overview-carousel",
+        description: "Scroll horizontal de cards com numero watermark + titulo + descricao. 3-8 cards com peek do proximo.",
+        schema: { type: "overview-carousel", section_headline: { max_words: 5, size: "48px" }, items: { min: 3, max: 8, fields: ["visual", "title", "description", "metric"] }, layout: "horizontal-scroll", animations: ["headline: clip-path-reveal", "cards: stagger-fade-up 0.08s"] },
+      },
+      {
+        id: "overview-icons",
+        name: "overview-icons",
+        description: "3-4 colunas com icone + titulo + 1 frase. Grid simetrico, o bloco mais rapido de consumir.",
+        schema: { type: "overview-icons", items: { min: 3, max: 4, fields: ["icon", "title", "description"] }, layout: "3col|4col", animations: ["items: stagger-fade-up 0.1s"] },
+      },
+      {
+        id: "overview-tabs",
+        name: "overview-tabs",
+        description: "Tabs horizontais no topo. Cada tab: headline + body + media. Crossfade ao trocar.",
+        schema: { type: "overview-tabs", tabs: { min: 3, max: 5, fields: ["tab_label", "headline", "body", "media"] }, layout: "tabs-top, content 50-50", animations: ["tab_switch: crossfade 0.3s", "media: scale-in 0.4s"] },
+      },
+      {
+        id: "overview-numbers",
+        name: "overview-numbers",
+        description: "3-5 numeros oversized (120px) em linha. Counter animation. Mini-viz acima de cada numero.",
+        schema: { type: "overview-numbers", metrics: { min: 3, max: 5, fields: ["number", "label", "mini_viz"] }, layout: "3col|4col|5col", animations: ["numbers: counter 2s stagger 0.15s", "mini_viz: draw-in 1s"] },
+      },
+    ],
+  },
+  {
+    id: "feature",
+    label: "Feature",
+    variants: [
+      {
+        id: "feature-alternating",
+        name: "feature-alternating",
+        description: "Blocos alternando texto/visual: esquerda+direita, depois invertido. 2-4 features com scroll reveal.",
+        schema: { type: "feature-alternating", features: { min: 2, max: 4, fields: ["headline", "body", "cta", "media"] }, layout: "55-45 alternating", gap: "120px", animations: ["features: scroll-reveal-stagger", "media: scale-in-perspective"] },
+      },
+      {
+        id: "feature-scroll-story",
+        name: "feature-scroll-story",
+        description: "Scroll storytelling: headline fixo, steps com crossfade. Progress indicator vertical. Padrao Apple.",
+        schema: { type: "feature-scroll-story", steps: { min: 2, max: 5, fields: ["step_number", "title", "body", "media"] }, layout: "50-40 pinned", animations: ["steps: crossfade-scroll", "media: crossfade-scale", "progress: fill-with-scroll"] },
+      },
+      {
+        id: "feature-grid",
+        name: "feature-grid",
+        description: "Grid 2x2 ou 3x2 de mini-features. Cada celula: icone + titulo + descricao. Hover highlight.",
+        schema: { type: "feature-grid", features: { min: 4, max: 9, fields: ["icon", "title", "description"] }, layout: "2x2|3x2|3x3", animations: ["features: stagger-fade-scale 0.08s"] },
+      },
+    ],
+  },
+  {
+    id: "proof",
+    label: "Social Proof",
+    variants: [
+      {
+        id: "proof-testimonials",
+        name: "proof-testimonials",
+        description: "Grid de depoimentos. Cada card: foto + quote italico + nome + cargo + empresa.",
+        schema: { type: "proof-testimonials", testimonials: { min: 2, max: 6, fields: ["photo", "quote", "name", "role", "company"] }, layout: "grid-3col", animations: ["cards: stagger-fade-up 0.1s"] },
+      },
+      {
+        id: "proof-logos",
+        name: "proof-logos",
+        description: "Grid de logos monocromaticos. 6-16 logos, opacity 0.5 com hover 1.0.",
+        schema: { type: "proof-logos", logos: { min: 6, max: 16, fields: ["logo", "name"] }, layout: "grid-responsive", opacity: "0.5 hover 1.0", animations: ["logos: fade-in-stagger"] },
+      },
+      {
+        id: "proof-stats",
+        name: "proof-stats",
+        description: "3-4 metricas impactantes com numero oversized + label + contexto. Divisores verticais entre colunas.",
+        schema: { type: "proof-stats", stats: { min: 3, max: 4, fields: ["number", "label", "context"] }, layout: "3col|4col with dividers", animations: ["numbers: counter 1.5s stagger 0.2s"] },
+      },
+    ],
+  },
 ];
