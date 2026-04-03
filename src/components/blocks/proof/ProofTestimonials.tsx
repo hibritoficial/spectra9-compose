@@ -24,7 +24,7 @@ export default function ProofTestimonials() {
           Quem usa, recomenda
         </h2>
 
-        <div className="grid grid-cols-3 gap-8">
+        <div className="proof-testimonials-grid grid grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
             <div
               key={i}

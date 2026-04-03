@@ -24,7 +24,7 @@ export default function OverviewNumbers() {
           Numeros que falam por si
         </h2>
 
-        <div className="grid grid-cols-3 gap-20">
+        <div className="overview-numbers-grid grid grid-cols-3 gap-20">
           {metrics.map((m, i) => (
             <div
               key={i}

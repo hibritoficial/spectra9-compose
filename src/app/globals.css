@@ -467,4 +467,35 @@
     padding: 16px 32px;
     font-size: 14px;
   }
+
+  /* --- Block responsive fixes (mobile) --- */
+
+  /* proof-testimonials: stack 1 column */
+  .proof-testimonials-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* proof-stats: 2×2 grid, smaller numbers */
+  .proof-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+  }
+  .proof-stats-grid > div { border-left: none !important; }
+  .proof-stats-grid > div:nth-child(2n) { border-left: 1px solid rgba(255,255,255,0.06) !important; }
+  .proof-stats-grid > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; margin-top: 24px; }
+  .proof-stats-number { font-size: clamp(36px, 14cqi, 56px) !important; }
+  .proof-stats-grid > div { padding-left: 8px !important; padding-right: 8px !important; }
+
+  /* overview-numbers: stack vertically */
+  .overview-numbers-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+
+  /* overview-icons: stack vertically */
+  .overview-icons-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
 }

@@ -17,7 +17,7 @@ export default function OverviewIcons() {
           <ContentLabel text="Titulo da secao (opcional)" />
         </div>
 
-        <div className="grid grid-cols-3 gap-12" style={{ containerType: "inline-size" }}>
+        <div className="overview-icons-grid grid grid-cols-3 gap-12">
           {items.map((item, i) => (
             <div
               key={i}

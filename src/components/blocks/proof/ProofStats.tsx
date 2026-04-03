@@ -22,7 +22,7 @@ export default function ProofStats() {
           <ContentLabel text="Titulo editorial (opcional)" />
         </div>
 
-        <div className="grid grid-cols-4 gap-0">
+        <div className="proof-stats-grid grid grid-cols-4 gap-0">
           {stats.map((s, i) => (
             <div
               key={i}
@@ -33,7 +33,7 @@ export default function ProofStats() {
               }}
             >
               <span
-                className="font-serif text-[#d0d0d0] leading-none tracking-[-0.03em] mb-3"
+                className="proof-stats-number font-serif text-[#d0d0d0] leading-none tracking-[-0.03em] mb-3"
                 style={{
                   fontSize: "clamp(48px, 5vw, 80px)",
                   textShadow: "0 0 40px rgba(255,255,255,0.03)",
