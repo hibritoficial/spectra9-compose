@@ -17,14 +17,14 @@ export default function OverviewCarousel() {
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-20">
         <div className="content-label-container mb-3">
-          <ContentLabel text="Titulo da secao — max 5 palavras" />
+          <ContentLabel text="Título da seção — max 5 palavras" />
         </div>
 
         <h2
           className="font-serif text-[#e0e0e0] tracking-[-0.03em] mb-16 anim-headline"
           style={{ fontSize: "clamp(36px, 4vw, 48px)", lineHeight: 1.1 }}
         >
-          Conheca o ecossistema
+          Conheça o ecossistema
         </h2>
 
         {/* Horizontal scroll container */}
@@ -52,7 +52,7 @@ export default function OverviewCarousel() {
               {/* Icon placeholder */}
               <MediaPlaceholder
                 label="icon"
-                hint={`Icone ou numero que represente visualmente '${card.title}'`}
+                hint={`Ícone ou número que represente visualmente '${card.title}'`}
                 width="80px"
                 height="80px"
                 variant="chart"

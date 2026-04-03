@@ -3,8 +3,8 @@ import MediaPlaceholder from "../../MediaPlaceholder";
 
 const metrics = [
   { number: "847", label: "Empresas ativas", viz: "sparkline" },
-  { number: "92%", label: "Satisfacao", viz: "ring gauge" },
-  { number: "3.4x", label: "ROI medio", viz: "bar chart" },
+  { number: "92%", label: "Satisfação", viz: "ring gauge" },
+  { number: "3.4x", label: "ROI médio", viz: "bar chart" },
 ];
 
 export default function OverviewNumbers() {
@@ -14,14 +14,14 @@ export default function OverviewNumbers() {
 
       <div className="relative z-10 max-w-[1100px] mx-auto px-20">
         <div className="content-label-container mb-3 text-center">
-          <ContentLabel text="Titulo editorial (opcional)" />
+          <ContentLabel text="Título editorial (opcional)" />
         </div>
 
         <h2
           className="font-serif text-[#ccc] text-center tracking-[-0.02em] mb-20 anim-headline"
           style={{ fontSize: "clamp(28px, 3.5vw, 44px)", lineHeight: 1.2 }}
         >
-          Numeros que falam por si
+          Números que falam por si
         </h2>
 
         <div className="overview-numbers-grid grid grid-cols-3 gap-20">
@@ -34,7 +34,7 @@ export default function OverviewNumbers() {
               {/* Mini-viz placeholder */}
               <MediaPlaceholder
                 label={m.viz}
-                hint={`Mini-grafico contextual: ${m.viz} para visualizar '${m.label}'`}
+                hint={`Mini-gráfico contextual: ${m.viz} para visualizar '${m.label}'`}
                 width="80px"
                 height="40px"
                 variant="chart"

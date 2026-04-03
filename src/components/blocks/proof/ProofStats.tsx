@@ -1,10 +1,10 @@
 import ContentLabel from "../../ContentLabel";
 
 const stats = [
-  { number: "2.4M", label: "Paginas criadas", context: "e crescendo" },
-  { number: "98%", label: "Uptime", context: "ultimos 12 meses" },
-  { number: "47", label: "Paises", context: "com usuarios ativos" },
-  { number: "4.9", label: "Avaliacao", context: "media no G2" },
+  { number: "2.4M", label: "Páginas criadas", context: "e crescendo" },
+  { number: "98%", label: "Uptime", context: "últimos 12 meses" },
+  { number: "47", label: "Países", context: "com usuários ativos" },
+  { number: "4.9", label: "Avaliação", context: "média no G2" },
 ];
 
 export default function ProofStats() {
@@ -19,7 +19,7 @@ export default function ProofStats() {
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-20">
         <div className="content-label-container mb-3 text-center">
-          <ContentLabel text="Titulo editorial (opcional)" />
+          <ContentLabel text="Título editorial (opcional)" />
         </div>
 
         <div className="proof-stats-grid grid grid-cols-4 gap-0">

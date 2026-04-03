@@ -5,9 +5,9 @@ import ContentLabel from "../../ContentLabel";
 import MediaPlaceholder from "../../MediaPlaceholder";
 
 const tabs = [
-  { label: "Dashboards", headline: "Visualize dados em tempo real", body: "Paineis customizaveis com widgets drag-and-drop. Atualizacao automatica sem refresh.", media: "Dashboard com graficos e KPIs" },
-  { label: "Automacao", headline: "Fluxos que trabalham por voce", body: "Crie regras visuais. Quando X acontece, faz Y. Zero codigo necessario.", media: "Editor visual de automacoes" },
-  { label: "Integracao", headline: "Conecte tudo em um lugar", body: "Mais de 200 integracoes nativas. Zapier, webhooks, e API completa.", media: "Marketplace de integracoes" },
+  { label: "Dashboards", headline: "Visualize dados em tempo real", body: "Painéis customizáveis com widgets drag-and-drop. Atualização automática sem refresh.", media: "Dashboard com gráficos e KPIs" },
+  { label: "Automação", headline: "Fluxos que trabalham por você", body: "Crie regras visuais. Quando X acontece, faz Y. Zero código necessário.", media: "Editor visual de automações" },
+  { label: "Integração", headline: "Conecte tudo em um lugar", body: "Mais de 200 integrações nativas. Zapier, webhooks, e API completa.", media: "Marketplace de integrações" },
 ];
 
 export default function OverviewTabs() {
@@ -19,7 +19,7 @@ export default function OverviewTabs() {
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-20 block-container">
         <div className="content-label-container mb-3">
-          <ContentLabel text="Titulo da secao (opcional)" />
+          <ContentLabel text="Título da seção (opcional)" />
         </div>
 
         {/* Tab bar */}
@@ -28,7 +28,7 @@ export default function OverviewTabs() {
             <button
               key={i}
               onClick={() => setActive(i)}
-              className="font-sans text-[15px] px-6 py-3 rounded-full transition-colors duration-200 cursor-default"
+              className="font-sans text-[15px] px-6 py-3 rounded-full transition-colors duration-200 cursor-pointer"
               style={{
                 background: active === i ? "rgba(255,255,255,0.06)" : "transparent",
                 color: active === i ? "#ddd" : "#555",
@@ -64,7 +64,7 @@ export default function OverviewTabs() {
           <div key={`media-${active}`} className="anim-media">
             <MediaPlaceholder
               label={tabs[active].media}
-              hint={`Visual que muda a cada tab — mini-screen, screenshot ou composicao visual de '${tabs[active].label}'`}
+              hint={`Visual que muda a cada tab — mini-screen, screenshot ou composição visual de '${tabs[active].label}'`}
               width="100%"
               height="360px"
               variant="screen"

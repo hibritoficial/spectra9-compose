@@ -49,17 +49,17 @@ export default function SimulatedNavbar({ absolute }: { absolute?: boolean }) {
 
       {/* Desktop links — hidden on small containers */}
       <div className="nav-links-desktop flex items-center gap-10">
-        <span className="font-sans text-[14px] text-[#555] cursor-default">
+        <span className="font-sans text-[14px] text-[#555] cursor-pointer">
           Produto
         </span>
-        <span className="font-sans text-[14px] text-[#555] cursor-default">
+        <span className="font-sans text-[14px] text-[#555] cursor-pointer">
           Sobre
         </span>
-        <span className="font-sans text-[14px] text-[#555] cursor-default">
+        <span className="font-sans text-[14px] text-[#555] cursor-pointer">
           Contato
         </span>
         <button
-          className="px-5 py-2 font-sans text-[13px] text-[#999] rounded-full cursor-default"
+          className="px-5 py-2 font-sans text-[13px] text-[#999] rounded-full cursor-pointer"
           style={{
             background: "rgba(255,255,255,0.04)",
             border: "1px solid rgba(255,255,255,0.08)",
@@ -71,7 +71,7 @@ export default function SimulatedNavbar({ absolute }: { absolute?: boolean }) {
 
       {/* Mobile hamburger — shown on small containers */}
       <div className="nav-hamburger hidden">
-        <div className="flex flex-col gap-[5px] cursor-default">
+        <div className="flex flex-col gap-[5px] cursor-pointer">
           <div style={{ width: 20, height: 1.5, background: "rgba(255,255,255,0.4)", borderRadius: 1 }} />
           <div style={{ width: 16, height: 1.5, background: "rgba(255,255,255,0.4)", borderRadius: 1 }} />
         </div>

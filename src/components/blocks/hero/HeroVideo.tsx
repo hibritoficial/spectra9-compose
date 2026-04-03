@@ -9,7 +9,7 @@ export default function HeroVideo() {
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
           label="full-screen looping video"
-          hint="Video looping 15-30s. Movimento lento e cinematografico. Overlay escuro 60% para legibilidade."
+          hint="Vídeo looping 15-30s. Movimento lento e cinematográfico. Overlay escuro 60% para legibilidade."
           width="100%"
           height="100%"
           variant="video"
@@ -104,7 +104,7 @@ export default function HeroVideo() {
 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center max-w-[900px] mx-auto px-20">
         <div className="content-label-container mb-4">
-          <ContentLabel text="Headline principal — o video contextualiza" />
+          <ContentLabel text="Headline principal — o vídeo contextualiza" />
         </div>
 
         <h1
@@ -118,7 +118,7 @@ export default function HeroVideo() {
         </h1>
 
         <div className="content-label-container mb-2">
-          <ContentLabel text="Descricao curta — 1 a 2 frases" />
+          <ContentLabel text="Descrição curta — 1 a 2 frases" />
         </div>
 
         <p className="font-sans text-[18px] text-[#bbb] leading-[1.75] max-w-[480px] mb-12 anim-sub">
@@ -127,7 +127,7 @@ export default function HeroVideo() {
         </p>
 
         <div className="content-label-container mb-3">
-          <ContentLabel text="CTA de acao principal" />
+          <ContentLabel text="CTA de ação principal" />
         </div>
 
         <button
@@ -137,14 +137,14 @@ export default function HeroVideo() {
           <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
             <path d="M0 0L14 8L0 16V0Z" fill="#0A0A0A" />
           </svg>
-          Assistir video
+          Assistir vídeo
         </button>
       </div>
 
       {/* Corner play/pause */}
       <div className="absolute z-[8] anim-fade-in" style={{ bottom: 56, right: 32, animationDelay: "1s" }}>
         <div
-          className="w-11 h-11 rounded-full flex items-center justify-center cursor-default"
+          className="w-11 h-11 rounded-full flex items-center justify-center cursor-pointer"
           style={{
             border: "1px solid rgba(255,255,255,0.15)",
             background: "rgba(255,255,255,0.03)",

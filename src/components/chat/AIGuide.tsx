@@ -49,7 +49,7 @@ export default function AIGuide({
         {
           role: "assistant",
           content:
-            "Oi! Sou o guia do Compose. Estou aqui pra te ajudar a montar a estrutura da sua pagina.\n\nMe conta: que tipo de pagina voce esta construindo? Landing de produto, site institucional, pagina de servico? Vou sugerir uma sequencia inicial de blocos.",
+            "Oi! Sou o guia do Compose. Estou aqui pra te ajudar a montar a estrutura da sua página.\n\nMe conta: que tipo de página você está construindo? Landing de produto, site institucional, página de serviço? Vou sugerir uma sequência inicial de blocos.",
         },
       ]);
     }
@@ -95,7 +95,7 @@ export default function AIGuide({
           ...prev,
           {
             role: "assistant",
-            content: "Erro de conexao. Verifique se a API key esta configurada.",
+            content: "Erro de conexão. Verifique se a API key está configurada.",
           },
         ]);
       } finally {

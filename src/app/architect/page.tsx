@@ -3,6 +3,19 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
+  Crosshair,
+  Zap,
+  Wrench,
+  Monitor,
+  MessageCircle,
+  Users,
+  DollarSign,
+  HelpCircle,
+  Rocket,
+  Mail,
+  Minus,
+} from "lucide-react";
+import {
   DndContext,
   closestCenter,
   KeyboardSensor,
@@ -26,22 +39,22 @@ interface BlockDef {
   purpose: string;
   label: string;
   jtbd: string;
-  icon: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
   elements: string[];
 }
 
 const blockCatalog: BlockDef[] = [
-  { purpose: "hero", label: "Hero", jtbd: "Isso e para mim?", icon: "\u{1F3AF}", elements: ["Headline", "Sub", "CTA", "Media"] },
-  { purpose: "overview", label: "Overview", jtbd: "O que faz?", icon: "\u26A1", elements: ["Headline", "Items", "Media"] },
-  { purpose: "feature_showcase", label: "Feature Showcase", jtbd: "Como funciona?", icon: "\u{1F527}", elements: ["Headline", "Steps", "Media"] },
-  { purpose: "product_demo", label: "Product Demo", jtbd: "Mostra na pratica", icon: "\u{1F4BB}", elements: ["Screen", "Headline", "Body"] },
-  { purpose: "social_proof", label: "Social Proof", jtbd: "Quem mais confia?", icon: "\u{1F4AC}", elements: ["Testimonials", "Logos"] },
-  { purpose: "about", label: "About / Quem Somos", jtbd: "Quem esta por tras?", icon: "\u{1F465}", elements: ["Headline", "Body", "Media"] },
-  { purpose: "pricing", label: "Pricing", jtbd: "Quanto custa?", icon: "\u{1F4B0}", elements: ["Plans", "CTA", "FAQ"] },
-  { purpose: "faq", label: "FAQ", jtbd: "E se eu tiver duvidas?", icon: "\u2753", elements: ["Questions", "Answers"] },
-  { purpose: "cta", label: "CTA Final", jtbd: "O que faco agora?", icon: "\u{1F680}", elements: ["Headline", "CTA", "Sub"] },
-  { purpose: "newsletter", label: "Newsletter", jtbd: "Quero ficar por dentro", icon: "\u{1F4E7}", elements: ["Headline", "Input", "CTA"] },
-  { purpose: "footer", label: "Footer", jtbd: "Links e contato", icon: "\u2501", elements: ["Links", "Social", "Copyright"] },
+  { purpose: "hero", label: "Hero", jtbd: "Isso é para mim?", icon: Crosshair, elements: ["Headline", "Sub", "CTA", "Media"] },
+  { purpose: "overview", label: "Overview", jtbd: "O que faz?", icon: Zap, elements: ["Headline", "Items", "Media"] },
+  { purpose: "feature_showcase", label: "Feature Showcase", jtbd: "Como funciona?", icon: Wrench, elements: ["Headline", "Steps", "Media"] },
+  { purpose: "product_demo", label: "Product Demo", jtbd: "Mostra na prática", icon: Monitor, elements: ["Screen", "Headline", "Body"] },
+  { purpose: "social_proof", label: "Social Proof", jtbd: "Quem mais confia?", icon: MessageCircle, elements: ["Testimonials", "Logos"] },
+  { purpose: "about", label: "About / Quem Somos", jtbd: "Quem está por trás?", icon: Users, elements: ["Headline", "Body", "Media"] },
+  { purpose: "pricing", label: "Pricing", jtbd: "Quanto custa?", icon: DollarSign, elements: ["Plans", "CTA", "FAQ"] },
+  { purpose: "faq", label: "FAQ", jtbd: "E se eu tiver dúvidas?", icon: HelpCircle, elements: ["Questions", "Answers"] },
+  { purpose: "cta", label: "CTA Final", jtbd: "O que faço agora?", icon: Rocket, elements: ["Headline", "CTA", "Sub"] },
+  { purpose: "newsletter", label: "Newsletter", jtbd: "Quero ficar por dentro", icon: Mail, elements: ["Headline", "Input", "CTA"] },
+  { purpose: "footer", label: "Footer", jtbd: "Links e contato", icon: Minus, elements: ["Links", "Social", "Copyright"] },
 ];
 
 /* ── Templates ── */
@@ -49,7 +62,7 @@ const blockCatalog: BlockDef[] = [
 const templates: Record<string, { label: string; blocks: string[] }> = {
   saas: { label: "SaaS Landing", blocks: ["hero", "overview", "feature_showcase", "feature_showcase", "social_proof", "pricing", "cta"] },
   institutional: { label: "Site Institucional", blocks: ["hero", "about", "feature_showcase", "social_proof", "cta"] },
-  product: { label: "Produto / Servico", blocks: ["hero", "feature_showcase", "product_demo", "social_proof", "pricing", "faq", "cta"] },
+  product: { label: "Produto / Serviço", blocks: ["hero", "feature_showcase", "product_demo", "social_proof", "pricing", "faq", "cta"] },
   brand: { label: "Manifesto / Brand", blocks: ["hero", "about", "feature_showcase", "cta"] },
 };
 
@@ -100,7 +113,7 @@ function SortableBlock({
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-1.5">
-          <span style={{ fontSize: 16 }}>{def.icon}</span>
+          <def.icon size={16} className="text-[#888] shrink-0" />
           <span className="font-sans text-[16px] font-medium text-[#ddd]">{def.label}</span>
           <span className="font-mono text-[11px] text-[#444] ml-auto">
             {String(index + 1).padStart(2, "0")}
@@ -129,7 +142,7 @@ function SortableBlock({
       {/* Remove button */}
       <button
         onClick={() => onRemove(block.id)}
-        className="mt-1 text-[#444] hover:text-[#C75A3A] transition-colors duration-150 shrink-0"
+        className="mt-1 cursor-pointer text-[#444] hover:text-[#C75A3A] transition-colors duration-150 shrink-0"
         style={{ fontSize: 18 }}
       >
         &times;
@@ -174,7 +187,7 @@ function ArchitectGuide({
         {
           role: "assistant",
           content:
-            "Vamos montar a estrutura da sua pagina.\n\nMe conta: e uma landing de produto, site institucional, pagina de servico, ou algo diferente? Posso sugerir uma estrutura inicial que voce ajusta.",
+            "Vamos montar a estrutura da sua página.\n\nMe conta: é uma landing de produto, site institucional, página de serviço, ou algo diferente? Posso sugerir uma estrutura inicial que você ajusta.",
         },
       ]);
     }
@@ -210,7 +223,7 @@ function ArchitectGuide({
       } catch {
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: "Erro de conexao." },
+          { role: "assistant", content: "Erro de conexão." },
         ]);
       } finally {
         setLoading(false);
@@ -278,7 +291,7 @@ function ArchitectGuide({
           <button
             onClick={() => sendMessage(input)}
             disabled={loading || !input.trim()}
-            className="px-3 py-2.5 rounded-lg font-mono text-[12px] transition-colors duration-150"
+            className="px-3 py-2.5 rounded-lg font-mono text-[12px] cursor-pointer transition-colors duration-150"
             style={{
               background: input.trim() && !loading ? "#C75A3A" : "#222",
               color: input.trim() && !loading ? "#fff" : "#555",
@@ -355,19 +368,19 @@ export default function ArchitectPage() {
         <div className="w-px h-5 bg-[#333]" />
         <Link
           href="/architect"
-          className="px-3 py-1.5 rounded font-sans text-[13px] bg-[#222] text-[#ddd] transition-colors duration-150"
+          className="px-3 py-1.5 rounded font-sans text-[13px] cursor-pointer bg-[#222] text-[#ddd] transition-colors duration-150"
         >
           Architect
         </Link>
         <Link
           href="/blocks"
-          className="px-3 py-1.5 rounded font-sans text-[13px] text-[#666] hover:text-[#999] transition-colors duration-150"
+          className="px-3 py-1.5 rounded font-sans text-[13px] cursor-pointer text-[#666] hover:text-[#999] transition-colors duration-150"
         >
           Blocks
         </Link>
         <div className="flex-1" />
         <span className="font-mono text-[11px] text-[#444]">
-          {blocks.length} secoes
+          {blocks.length} seções
         </span>
       </header>
 
@@ -385,7 +398,7 @@ export default function ArchitectPage() {
                 <button
                   key={key}
                   onClick={() => handleTemplateChange(key)}
-                  className="px-4 py-2.5 rounded-lg font-sans text-[14px] transition-colors duration-150"
+                  className="px-4 py-2.5 rounded-lg font-sans text-[14px] cursor-pointer transition-colors duration-150"
                   style={{
                     background: activeTemplate === key ? "rgba(255,255,255,0.06)" : "transparent",
                     color: activeTemplate === key ? "#ddd" : "#555",
@@ -422,13 +435,13 @@ export default function ArchitectPage() {
           <div className="relative mt-6">
             <button
               onClick={() => setShowAddMenu(!showAddMenu)}
-              className="w-full py-3 rounded-xl font-sans text-[14px] text-[#555] hover:text-[#888] transition-colors duration-150"
+              className="w-full py-3 rounded-xl font-sans text-[14px] cursor-pointer text-[#555] hover:text-[#888] transition-colors duration-150"
               style={{
                 border: "1px dashed rgba(255,255,255,0.08)",
                 background: showAddMenu ? "rgba(255,255,255,0.02)" : "transparent",
               }}
             >
-              + Adicionar secao
+              + Adicionar seção
             </button>
 
             {showAddMenu && (
@@ -441,9 +454,9 @@ export default function ArchitectPage() {
                     <button
                       key={def.purpose}
                       onClick={() => addBlock(def.purpose)}
-                      className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-[#1a1a1a] transition-colors duration-150"
+                      className="w-full flex items-center gap-3 px-5 py-3 text-left cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-150"
                     >
-                      <span style={{ fontSize: 16 }}>{def.icon}</span>
+                      <def.icon size={16} className="text-[#777] shrink-0" />
                       <div>
                         <span className="font-sans text-[14px] text-[#ccc]">{def.label}</span>
                         <span className="font-sans text-[12px] text-[#555] ml-3">{def.jtbd}</span>
@@ -459,7 +472,7 @@ export default function ArchitectPage() {
           <div className="mt-8 mb-8">
             <Link
               href={`/blocks?sequence=${blocks.map((b) => b.purpose).join(",")}`}
-              className="block w-full py-4 rounded-xl font-sans text-[16px] font-medium text-center transition-colors duration-150"
+              className="block w-full py-4 rounded-xl font-sans text-[16px] font-medium text-center cursor-pointer transition-colors duration-150"
               style={{
                 background: blocks.length > 0 ? "#C75A3A" : "#222",
                 color: blocks.length > 0 ? "#fff" : "#555",

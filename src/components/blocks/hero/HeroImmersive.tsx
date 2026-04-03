@@ -9,7 +9,7 @@ export default function HeroImmersive() {
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
           label="imagem ou video full-bleed"
-          hint="Fotografia premium full-bleed, video slow-motion, ou composicao 3D. A imagem deve comunicar a essencia da marca."
+          hint="Fotografia premium full-bleed, vídeo slow-motion, ou composição 3D. A imagem deve comunicar a essência da marca."
           width="100%"
           height="100%"
           variant="photo"
@@ -72,7 +72,7 @@ export default function HeroImmersive() {
         </h1>
 
         <div className="content-label-container mb-2">
-          <ContentLabel text="Descricao curta — 1 a 2 frases de apoio" />
+          <ContentLabel text="Descrição curta — 1 a 2 frases de apoio" />
         </div>
 
         <p
@@ -84,7 +84,7 @@ export default function HeroImmersive() {
         </p>
 
         <div className="content-label-container mb-3">
-          <ContentLabel text="CTA de acao principal" />
+          <ContentLabel text="CTA de ação principal" />
         </div>
 
         <button

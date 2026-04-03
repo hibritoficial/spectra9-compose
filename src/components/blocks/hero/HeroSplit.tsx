@@ -25,7 +25,7 @@ export default function HeroSplit() {
         </h1>
 
         <div className="content-label-container mb-2">
-          <ContentLabel text="Descricao complementar em 2 frases" />
+          <ContentLabel text="Descrição complementar em 2 frases" />
         </div>
 
         <p className="font-sans text-[18px] text-[#777] leading-[1.75] max-w-[420px] mb-12 anim-sub">
@@ -34,7 +34,7 @@ export default function HeroSplit() {
         </p>
 
         <div className="content-label-container mb-3">
-          <ContentLabel text="CTAs — acao principal + acao secundaria" />
+          <ContentLabel text="CTAs — ação principal + ação secundária" />
         </div>
 
         <div className="hero-ctas flex gap-4">
@@ -60,7 +60,7 @@ export default function HeroSplit() {
       >
         <MediaPlaceholder
           label="split visual — 50% viewport"
-          hint="Imagem, video ou ilustracao que ocupa metade exata da viewport. Borda suave com o fundo."
+          hint="Imagem, vídeo ou ilustração que ocupa metade exata da viewport. Borda suave com o fundo."
           width="100%"
           height="100%"
           variant="photo"

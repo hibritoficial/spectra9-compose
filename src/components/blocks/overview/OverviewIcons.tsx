@@ -2,9 +2,9 @@ import ContentLabel from "../../ContentLabel";
 import MediaPlaceholder from "../../MediaPlaceholder";
 
 const items = [
-  { title: "Velocidade", desc: "Deploys instantaneos. Zero downtime. Infraestrutura global distribuida." },
-  { title: "Simplicidade", desc: "Interface intuitiva que nao exige treinamento. Comece em minutos." },
-  { title: "Integracao", desc: "Conecte com suas ferramentas favoritas. API aberta e documentada." },
+  { title: "Velocidade", desc: "Deploys instantâneos. Zero downtime. Infraestrutura global distribuída." },
+  { title: "Simplicidade", desc: "Interface intuitiva que não exige treinamento. Comece em minutos." },
+  { title: "Integração", desc: "Conecte com suas ferramentas favoritas. API aberta e documentada." },
 ];
 
 export default function OverviewIcons() {
@@ -14,7 +14,7 @@ export default function OverviewIcons() {
 
       <div className="relative z-10 max-w-[1100px] mx-auto px-20">
         <div className="content-label-container mb-3 text-center">
-          <ContentLabel text="Titulo da secao (opcional)" />
+          <ContentLabel text="Título da seção (opcional)" />
         </div>
 
         <div className="overview-icons-grid grid grid-cols-3 gap-12">
@@ -26,7 +26,7 @@ export default function OverviewIcons() {
             >
               <MediaPlaceholder
                 label="icon"
-                hint={`Icone que sintetize '${item.title}'. Custom SVG preferivel a generico`}
+                hint={`Ícone que sintetize '${item.title}'. Custom SVG preferível a genérico`}
                 width="48px"
                 height="48px"
                 variant="chart"

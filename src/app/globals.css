@@ -47,6 +47,11 @@
     background: #333;
     border-radius: 3px;
   }
+
+  /* RULE: Every clickable element gets pointer cursor */
+  button, a, [role="button"], [onclick] {
+    cursor: pointer;
+  }
 }
 
 @theme inline {

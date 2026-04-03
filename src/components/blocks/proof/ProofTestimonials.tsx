@@ -2,8 +2,8 @@ import ContentLabel from "../../ContentLabel";
 import MediaPlaceholder from "../../MediaPlaceholder";
 
 const testimonials = [
-  { quote: "Transformou completamente nossa operacao. O que levava dias agora acontece em minutos. A equipe nao volta mais ao processo antigo.", name: "Ana Oliveira", role: "Head de Produto", company: "TechCo" },
-  { quote: "A melhor decisao que tomamos em 2025. ROI positivo no primeiro mes. Suporte excepcional quando precisamos.", name: "Carlos Santos", role: "CEO", company: "StartupXYZ" },
+  { quote: "Transformou completamente nossa operação. O que levava dias agora acontece em minutos. A equipe não volta mais ao processo antigo.", name: "Ana Oliveira", role: "Head de Produto", company: "TechCo" },
+  { quote: "A melhor decisão que tomamos em 2025. ROI positivo no primeiro mês. Suporte excepcional quando precisamos.", name: "Carlos Santos", role: "CEO", company: "StartupXYZ" },
   { quote: "Interface intuitiva e resultados consistentes. Nosso time de 40 pessoas adotou sem treinamento formal.", name: "Marina Costa", role: "Diretora de Ops", company: "AgencyPlus" },
 ];
 
@@ -14,7 +14,7 @@ export default function ProofTestimonials() {
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-20">
         <div className="content-label-container mb-3 text-center">
-          <ContentLabel text="Titulo da secao (opcional)" />
+          <ContentLabel text="Título da seção (opcional)" />
         </div>
 
         <h2
@@ -45,7 +45,7 @@ export default function ProofTestimonials() {
               <div className="flex items-center gap-4 mt-auto">
                 <MediaPlaceholder
                   label="foto"
-                  hint={`Foto profissional de ${t.name} — rosto, fundo neutro, boa iluminacao`}
+                  hint={`Foto profissional de ${t.name} — rosto, fundo neutro, boa iluminação`}
                   width="48px"
                   height="48px"
                   variant="photo"

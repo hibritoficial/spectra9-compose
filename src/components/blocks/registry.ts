@@ -170,7 +170,7 @@ export const blockRegistry: BlockPurpose[] = [
       {
         id: "overview-carousel",
         name: "overview-carousel",
-        description: "Scroll horizontal de cards com numero watermark + titulo + descricao. 3-8 cards com peek do proximo.",
+        description: "Scroll horizontal de cards com número watermark + título + descrição. 3-8 cards com peek do próximo.",
         schema: { type: "overview-carousel", section_headline: { max_words: 5, size: "48px" }, items: { min: 3, max: 8, fields: ["visual", "title", "description", "metric"] }, layout: "horizontal-scroll", animations: ["headline: clip-path-reveal", "cards: stagger-fade-up 0.08s"] },
       },
       {
@@ -212,7 +212,7 @@ export const blockRegistry: BlockPurpose[] = [
       {
         id: "feature-grid",
         name: "feature-grid",
-        description: "Grid 2x2 ou 3x2 de mini-features. Cada celula: icone + titulo + descricao. Hover highlight.",
+        description: "Grid 2x2 ou 3x2 de mini-features. Cada célula: ícone + título + descrição. Hover highlight.",
         schema: { type: "feature-grid", features: { min: 4, max: 9, fields: ["icon", "title", "description"] }, layout: "2x2|3x2|3x3", animations: ["features: stagger-fade-scale 0.08s"] },
       },
     ],

@@ -16,7 +16,7 @@ const viewportButtons: { mode: ViewportMode; label: string }[] = [
 const hintsIcons: Record<HintsMode, { icon: string; title: string }> = {
   clean: { icon: "\u29B8", title: "Clean — sem hints" },
   hover: { icon: "\u25CE", title: "Hover — hints no hover" },
-  all: { icon: "\u25C9", title: "All — tudo visivel" },
+  all: { icon: "\u25C9", title: "All — tudo visível" },
 };
 
 interface ControlBarProps {

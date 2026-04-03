@@ -5,8 +5,8 @@ import ContentLabel from "../../ContentLabel";
 import MediaPlaceholder from "../../MediaPlaceholder";
 
 const steps = [
-  { title: "Conecte sua fonte", body: "Importe dados de qualquer lugar. CSV, API, ou integracoes nativas.", media: "Tela de importacao" },
-  { title: "Configure os fluxos", body: "Monte regras visuais. Quando X acontece, faz Y automaticamente.", media: "Editor de automacao" },
+  { title: "Conecte sua fonte", body: "Importe dados de qualquer lugar. CSV, API, ou integrações nativas.", media: "Tela de importação" },
+  { title: "Configure os fluxos", body: "Monte regras visuais. Quando X acontece, faz Y automaticamente.", media: "Editor de automação" },
   { title: "Publique e monitore", body: "Um clique para ir ao ar. Dashboards em tempo real mostram cada metrica.", media: "Dashboard de monitoramento" },
 ];
 
@@ -26,7 +26,7 @@ export default function FeatureScrollStory() {
           className="font-serif text-[#ccc] tracking-[-0.02em] mb-20 anim-headline"
           style={{ fontSize: "clamp(28px, 3.5vw, 44px)", lineHeight: 1.2 }}
         >
-          Tres passos para comecar
+          Três passos para começar
         </h2>
 
         <div className="feature-scroll-grid items-start">
@@ -38,7 +38,7 @@ export default function FeatureScrollStory() {
                 <button
                   key={i}
                   onClick={() => setActiveStep(i)}
-                  className="flex items-start gap-6 text-left w-full cursor-default transition-opacity duration-300"
+                  className="flex items-start gap-6 text-left w-full cursor-pointer transition-opacity duration-300"
                   style={{
                     padding: "32px 0",
                     borderTop: i > 0 ? "1px solid rgba(255,255,255,0.04)" : undefined,

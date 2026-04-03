@@ -2,9 +2,9 @@ import ContentLabel from "../../ContentLabel";
 import MediaPlaceholder from "../../MediaPlaceholder";
 
 const features = [
-  { headline: "Editor visual inteligente", body: "Arraste, solte, personalize. Cada componente se adapta ao contexto. Zero codigo, resultado profissional.", cta: "Ver em acao" },
-  { headline: "Colaboracao em tempo real", body: "Trabalhe em equipe simultaneamente. Comentarios, versoes, aprovacoes — tudo no mesmo lugar.", cta: "Saiba mais" },
-  { headline: "Analytics integrado", body: "Cada pagina, cada bloco, cada CTA rastreado automaticamente. Dashboards que geram insight, nao so dados.", cta: null },
+  { headline: "Editor visual inteligente", body: "Arraste, solte, personalize. Cada componente se adapta ao contexto. Zero código, resultado profissional.", cta: "Ver em ação" },
+  { headline: "Colaboração em tempo real", body: "Trabalhe em equipe simultaneamente. Comentários, versões, aprovações — tudo no mesmo lugar.", cta: "Saiba mais" },
+  { headline: "Analytics integrado", body: "Cada página, cada bloco, cada CTA rastreado automaticamente. Dashboards que geram insight, não só dados.", cta: null },
 ];
 
 export default function FeatureAlternating() {
@@ -14,7 +14,7 @@ export default function FeatureAlternating() {
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-20 block-container">
         <div className="content-label-container mb-3">
-          <ContentLabel text="Titulo da secao (opcional)" />
+          <ContentLabel text="Título da seção (opcional)" />
         </div>
 
         <h2
@@ -25,7 +25,7 @@ export default function FeatureAlternating() {
         </h2>
 
         <div className="content-label-container mb-16">
-          <ContentLabel text="Subtitulo da secao (opcional)" />
+          <ContentLabel text="Subtítulo da seção (opcional)" />
         </div>
 
         {/* Feature rows — alternating sides */}
@@ -56,7 +56,7 @@ export default function FeatureAlternating() {
                   </p>
 
                   {feat.cta && (
-                    <span className="font-sans text-[14px] text-[#999] cursor-default" style={{ borderBottom: "1px solid rgba(255,255,255,0.15)", paddingBottom: 2 }}>
+                    <span className="font-sans text-[14px] text-[#999] cursor-pointer" style={{ borderBottom: "1px solid rgba(255,255,255,0.15)", paddingBottom: 2 }}>
                       {feat.cta} &rarr;
                     </span>
                   )}
@@ -66,7 +66,7 @@ export default function FeatureAlternating() {
                 <div>
                   <MediaPlaceholder
                     label={`feature ${i + 1} visual`}
-                    hint={`Mini-screen do produto mostrando '${feat.headline}' em acao, ou imagem demonstrando o conceito`}
+                    hint={`Mini-screen do produto mostrando '${feat.headline}' em ação, ou imagem demonstrando o conceito`}
                     width="100%"
                     height="340px"
                     variant="screen"

@@ -6,7 +6,7 @@ const features = [
   { title: "Multi-tenant", desc: "Isolamento completo entre workspaces. Dados nunca cruzam." },
   { title: "Webhooks", desc: "Eventos em tempo real para todas as ações da plataforma." },
   { title: "Auditoria", desc: "Log completo de toda ação. Compliance pronto." },
-  { title: "Custom domains", desc: "Dominio proprio por workspace com SSL automatico." },
+  { title: "Custom domains", desc: "Domínio próprio por workspace com SSL automático." },
   { title: "Role-based access", desc: "Controle granular de permissões por funcionalidade." },
 ];
 
@@ -17,14 +17,14 @@ export default function FeatureGrid() {
 
       <div className="relative z-10 max-w-[1100px] mx-auto px-20 block-container">
         <div className="content-label-container mb-3 text-center">
-          <ContentLabel text="Titulo da secao de features" />
+          <ContentLabel text="Título da seção de features" />
         </div>
 
         <h2
           className="font-serif text-[#ccc] text-center tracking-[-0.02em] mb-4 anim-headline"
           style={{ fontSize: "clamp(28px, 3.5vw, 44px)", lineHeight: 1.2 }}
         >
-          Tudo que voce precisa
+          Tudo que você precisa
         </h2>
 
         <div className="content-label-container mb-16 text-center">
@@ -35,7 +35,7 @@ export default function FeatureGrid() {
           {features.map((feat, i) => (
             <div
               key={i}
-              className="flex flex-col p-7 rounded-2xl anim-sub transition-colors duration-200 cursor-default"
+              className="flex flex-col p-7 rounded-2xl anim-sub transition-colors duration-200 cursor-pointer"
               style={{
                 background: "#111",
                 border: "1px solid rgba(255,255,255,0.04)",

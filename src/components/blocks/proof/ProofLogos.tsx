@@ -22,7 +22,7 @@ export default function ProofLogos() {
           {logos.map((logo, i) => (
             <div
               key={i}
-              className="flex items-center justify-center anim-sub transition-opacity duration-200 cursor-default"
+              className="flex items-center justify-center anim-sub transition-opacity duration-200 cursor-pointer"
               style={{
                 opacity: 0.45,
                 animationDelay: `${0.1 + i * 0.04}s`,
@@ -32,7 +32,7 @@ export default function ProofLogos() {
             >
               <MediaPlaceholder
                 label={logo.name}
-                hint={`Logo de ${logo.name} — monocromatico, fundo transparente. PNG ou SVG`}
+                hint={`Logo de ${logo.name} — monocromático, fundo transparente. PNG ou SVG`}
                 width="120px"
                 height="40px"
                 variant="default"

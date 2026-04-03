@@ -12,7 +12,7 @@ export default function HeroStatement() {
       <div className="absolute inset-0 z-0 anim-fade-in">
         <MediaPlaceholder
           label="gradient mesh background"
-          hint="Gradient mesh sutil em tons escuros. Movimentos organicos lentos, quase imperceptiveis."
+          hint="Gradient mesh sutil em tons escuros. Movimentos orgânicos lentos, quase imperceptíveis."
           width="100%"
           height="100%"
           className="!rounded-none !border-none !shadow-none opacity-20"
@@ -25,7 +25,7 @@ export default function HeroStatement() {
         style={{ maxWidth: 1200, margin: "0 auto", width: "100%" }}>
 
         <div className="content-label-container mb-4">
-          <ContentLabel text="Headline principal — max 5 palavras, impacto tipografico" />
+          <ContentLabel text="Headline principal — max 5 palavras, impacto tipográfico" />
         </div>
 
         {/* Editorial separator above headline */}
@@ -45,7 +45,7 @@ export default function HeroStatement() {
         <div style={{ height: 40 }} />
 
         <div className="content-label-container mb-3">
-          <ContentLabel text="Descricao do produto em 2 frases" />
+          <ContentLabel text="Descrição do produto em 2 frases" />
         </div>
 
         <p className="font-sans text-[18px] text-[#777] leading-[1.75] max-w-[520px] anim-sub">
@@ -57,7 +57,7 @@ export default function HeroStatement() {
         <div style={{ height: 40 }} />
 
         <div className="content-label-container mb-3">
-          <ContentLabel text="CTAs — acao principal + acao secundaria" />
+          <ContentLabel text="CTAs — ação principal + ação secundária" />
         </div>
 
         <div className="hero-ctas flex gap-5">

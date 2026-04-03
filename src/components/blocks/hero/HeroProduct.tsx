@@ -20,7 +20,7 @@ export default function HeroProduct() {
           </div>
 
           <span className="font-mono text-[12px] text-[#555] tracking-[0.15em] uppercase mb-3 anim-badge">
-            Plataforma de inteligencia editorial
+            Plataforma de inteligência editorial
           </span>
 
           {/* Separator under badge */}
@@ -40,7 +40,7 @@ export default function HeroProduct() {
           </h1>
 
           <div className="content-label-container mb-2">
-            <ContentLabel text="Descricao do produto em 2 frases" />
+            <ContentLabel text="Descrição do produto em 2 frases" />
           </div>
 
           <p className="font-sans text-[18px] text-[#777] leading-[1.75] max-w-[460px] mb-12 anim-sub">
@@ -49,7 +49,7 @@ export default function HeroProduct() {
           </p>
 
           <div className="content-label-container mb-3">
-            <ContentLabel text="CTAs — acao principal + acao secundaria" />
+            <ContentLabel text="CTAs — ação principal + ação secundária" />
           </div>
 
           <div className="hero-ctas flex gap-4">
@@ -57,7 +57,7 @@ export default function HeroProduct() {
               className="font-sans text-[15px] font-medium rounded-full tracking-wide anim-cta-1"
               style={{ padding: "16px 36px", background: "#e0e0e0", color: "#0A0A0A" }}
             >
-              Comecar gratis
+              Começar grátis
             </button>
             <button
               className="font-sans text-[15px] rounded-full tracking-wide anim-cta-2"
@@ -79,7 +79,7 @@ export default function HeroProduct() {
           >
             <MediaPlaceholder
               label="product mini-screen"
-              hint="Mini-screen do produto em perspectiva isometrica. UI funcional estilizada, fundo escuro, accent da marca."
+              hint="Mini-screen do produto em perspectiva isométrica. UI funcional estilizada, fundo escuro, accent da marca."
               width="100%"
               height="480px"
               variant="screen"
