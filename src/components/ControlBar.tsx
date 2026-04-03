@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { blockRegistry } from "./blocks/registry";
 import type { HintsMode } from "./ComposeContext";
 
@@ -63,6 +64,22 @@ export default function ControlBar({
       <span className="font-mono text-[12px] text-[#666] tracking-[0.2em] uppercase shrink-0">
         COMPOSE
       </span>
+
+      <div className="w-px h-5 bg-[#333]" />
+
+      {/* Page navigation */}
+      <Link
+        href="/architect"
+        className="px-3 py-1.5 rounded font-sans text-[13px] text-[#666] hover:text-[#999] transition-colors duration-150"
+      >
+        Architect
+      </Link>
+      <Link
+        href="/blocks"
+        className="px-3 py-1.5 rounded font-sans text-[13px] bg-[#222] text-[#ddd] transition-colors duration-150"
+      >
+        Blocks
+      </Link>
 
       <div className="w-px h-5 bg-[#333]" />
 

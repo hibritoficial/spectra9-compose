@@ -340,6 +340,50 @@
 }
 
 /* ========================================
+   BLOCK LAYOUT DEFAULTS — Desktop
+   ======================================== */
+
+/* feature-alternating: 55-45 grid, reversed flips order */
+.feature-alt-row {
+  display: grid;
+  grid-template-columns: 1fr 0.82fr;
+  gap: 64px;
+  align-items: center;
+}
+.feature-alt-row--reversed {
+  grid-template-columns: 0.82fr 1fr;
+}
+.feature-alt-row--reversed > :first-child { order: 2; }
+.feature-alt-row--reversed > :last-child { order: 1; }
+
+/* feature-scroll-story: 2-col grid */
+.feature-scroll-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+}
+
+/* feature-grid: 3-col */
+.feature-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* overview-tabs: tab bar + content grid */
+.overview-tabs-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 64px;
+}
+.overview-tabs-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* ========================================
    RESPONSIVE — Desktop defaults (no container)
    ======================================== */
 
@@ -440,6 +484,33 @@
     width: 100%;
     text-align: center;
   }
+
+  /* global: tighter padding for block containers */
+  .block-container { padding-left: 32px !important; padding-right: 32px !important; }
+
+  /* feature-alternating: 2-col still but tighter gap */
+  .feature-alt-row {
+    gap: 40px !important;
+  }
+
+  /* feature-scroll-story: stack */
+  .feature-scroll-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .feature-scroll-grid .sticky { position: relative !important; top: auto !important; }
+
+  /* feature-grid: 2-col */
+  .feature-grid-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  /* overview-tabs: content stacks */
+  .overview-tabs-content {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
 }
 
 /* ========================================
@@ -497,5 +568,48 @@
   .overview-icons-grid {
     grid-template-columns: 1fr !important;
     gap: 40px !important;
+  }
+
+  /* global: minimal padding for mobile */
+  .block-container { padding-left: 20px !important; padding-right: 20px !important; }
+
+  /* feature-alternating: stack, media on top */
+  .feature-alt-row {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .feature-alt-row > :first-child { order: 2 !important; }
+  .feature-alt-row > :last-child { order: 1 !important; }
+  .feature-alt-row--reversed > :first-child { order: 2 !important; }
+  .feature-alt-row--reversed > :last-child { order: 1 !important; }
+
+  /* feature-scroll-story: stack, reduce gap */
+  .feature-scroll-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  /* feature-grid: 1-col */
+  .feature-grid-cards {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* overview-tabs: horizontal scroll tab bar + stack content */
+  .overview-tabs-bar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    gap: 8px !important;
+    margin-bottom: 40px !important;
+    padding-bottom: 8px;
+  }
+  .overview-tabs-bar button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .overview-tabs-content {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
   }
 }

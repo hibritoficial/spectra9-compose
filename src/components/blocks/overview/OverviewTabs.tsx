@@ -17,13 +17,13 @@ export default function OverviewTabs() {
     <section className="hero-section-end relative w-full overflow-hidden" style={{ padding: "120px 0" }}>
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 40% 40% at 60% 40%, rgba(255,255,255,0.02) 0%, transparent 50%)" }} />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-20">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-20 block-container">
         <div className="content-label-container mb-3">
           <ContentLabel text="Titulo da secao (opcional)" />
         </div>
 
         {/* Tab bar */}
-        <div className="flex gap-1 mb-16 anim-fade-in">
+        <div className="overview-tabs-bar anim-fade-in">
           {tabs.map((tab, i) => (
             <button
               key={i}
@@ -41,7 +41,7 @@ export default function OverviewTabs() {
         </div>
 
         {/* Tab content — 50/50 grid */}
-        <div className="grid grid-cols-2 gap-16 items-center">
+        <div className="overview-tabs-content">
           {/* Text */}
           <div key={`text-${active}`} className="anim-sub" style={{ animationDelay: "0.1s" }}>
             <div className="content-label-container mb-2">

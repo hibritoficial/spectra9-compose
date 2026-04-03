@@ -12,7 +12,7 @@ export default function FeatureAlternating() {
     <section className="hero-section-end relative w-full overflow-hidden" style={{ padding: "120px 0" }}>
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.01) 50%, transparent 100%)" }} />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-20">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-20 block-container">
         <div className="content-label-container mb-3">
           <ContentLabel text="Titulo da secao (opcional)" />
         </div>
@@ -35,16 +35,11 @@ export default function FeatureAlternating() {
             return (
               <div
                 key={i}
-                className="grid items-center anim-sub"
-                style={{
-                  gridTemplateColumns: "55% 45%",
-                  direction: reversed ? "rtl" : "ltr",
-                  animationDelay: `${0.2 + i * 0.15}s`,
-                  gap: 64,
-                }}
+                className={`feature-alt-row anim-sub ${reversed ? "feature-alt-row--reversed" : ""}`}
+                style={{ animationDelay: `${0.2 + i * 0.15}s` }}
               >
                 {/* Text side */}
-                <div style={{ direction: "ltr" }}>
+                <div>
                   <div className="content-label-container mb-2">
                     <ContentLabel text={`Feature ${i + 1} — headline + body + CTA`} />
                   </div>
@@ -68,7 +63,7 @@ export default function FeatureAlternating() {
                 </div>
 
                 {/* Media side */}
-                <div style={{ direction: "ltr" }}>
+                <div>
                   <MediaPlaceholder
                     label={`feature ${i + 1} visual`}
                     hint={`Mini-screen do produto mostrando '${feat.headline}' em acao, ou imagem demonstrando o conceito`}

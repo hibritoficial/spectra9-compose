@@ -15,7 +15,7 @@ export default function FeatureGrid() {
     <section className="hero-section-end relative w-full overflow-hidden" style={{ padding: "120px 0" }}>
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,255,255,0.015) 0%, transparent 50%)" }} />
 
-      <div className="relative z-10 max-w-[1100px] mx-auto px-20">
+      <div className="relative z-10 max-w-[1100px] mx-auto px-20 block-container">
         <div className="content-label-container mb-3 text-center">
           <ContentLabel text="Titulo da secao de features" />
         </div>
@@ -31,7 +31,7 @@ export default function FeatureGrid() {
           <ContentLabel text="Subtitulo (opcional)" />
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="feature-grid-cards">
           {features.map((feat, i) => (
             <div
               key={i}

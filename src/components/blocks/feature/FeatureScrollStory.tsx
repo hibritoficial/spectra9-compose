@@ -17,7 +17,7 @@ export default function FeatureScrollStory() {
     <section className="hero-section-end relative w-full overflow-hidden" style={{ padding: "120px 0" }}>
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 40% 50% at 30% 50%, rgba(255,255,255,0.02) 0%, transparent 50%)" }} />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-20">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-20 block-container">
         <div className="content-label-container mb-3">
           <ContentLabel text="Headline fixo — pode ter accent em italico" />
         </div>
@@ -29,7 +29,7 @@ export default function FeatureScrollStory() {
           Tres passos para comecar
         </h2>
 
-        <div className="grid grid-cols-2 gap-16 items-start">
+        <div className="feature-scroll-grid items-start">
           {/* Left — Steps */}
           <div className="flex flex-col gap-0">
             {/* Progress line */}
