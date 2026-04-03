@@ -4,34 +4,38 @@ import SimulatedNavbar from "../../SimulatedNavbar";
 
 export default function HeroProduct() {
   return (
-    <section className="hero-product relative w-full min-h-screen flex flex-col overflow-hidden">
-      <div className="absolute inset-0 z-0 anim-fade-in">
-        <MediaPlaceholder
-          label="gradient mesh background"
-          hint="Gradient mesh radial partindo do centro-esquerda. Tons: #0A0A0A a #151515 com halo sutil."
-          width="100%"
-          height="100%"
-          className="!rounded-none !border-none opacity-20"
-        />
-      </div>
+    <section className="hero-product hero-section-end relative w-full min-h-screen flex flex-col overflow-hidden">
+      {/* Gradient mesh — off-center, aligned with headline */}
+      <div className="absolute inset-0 z-0 hero-product-mesh" />
 
       <SimulatedNavbar />
 
-      <div className="hero-product-grid relative z-10 w-full max-w-[1440px] mx-auto px-12 flex-1 items-center py-20">
+      <div className="hero-product-grid relative z-10 w-full mx-auto flex-1 items-center py-20"
+        style={{ maxWidth: 1440, paddingLeft: 80, paddingRight: 80 }}>
+
+        {/* Text column */}
         <div className="flex flex-col">
           <div className="content-label-container mb-2">
             <ContentLabel text="Badge de contexto — ex: Plataforma SaaS, Consultoria, etc." />
           </div>
 
-          <span className="font-mono text-[12px] text-[#666] tracking-[0.15em] uppercase mb-8 anim-badge">
+          <span className="font-mono text-[12px] text-[#555] tracking-[0.15em] uppercase mb-3 anim-badge">
             Plataforma de inteligencia editorial
           </span>
+
+          {/* Separator under badge */}
+          <div className="editorial-line mb-10 anim-fade-in" style={{ animationDelay: "0.1s" }} />
 
           <div className="content-label-container mb-2">
             <ContentLabel text="Headline principal — proposta de valor" />
           </div>
 
-          <h1 className="hero-headline font-serif text-[#e0e0e0] leading-[1.05] tracking-[-0.03em] mb-8 anim-slide-right">
+          <h1
+            className="hero-headline font-serif text-[#e8e8e8] tracking-[-0.04em] mb-10 anim-slide-right"
+            style={{
+              textShadow: "0 0 80px rgba(255,255,255,0.03)",
+            }}
+          >
             Lorem ipsum dolor sit amet
           </h1>
 
@@ -39,33 +43,48 @@ export default function HeroProduct() {
             <ContentLabel text="Descricao do produto em 2 frases" />
           </div>
 
-          <p className="font-sans text-[18px] text-[#888] leading-[1.7] max-w-[480px] mb-12 anim-sub">
+          <p className="font-sans text-[18px] text-[#777] leading-[1.75] max-w-[460px] mb-12 anim-sub">
             Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
             posuere cubilia curae. Sed non velit.
           </p>
 
-          <div className="content-label-container mb-2">
+          <div className="content-label-container mb-3">
             <ContentLabel text="CTAs — acao principal + acao secundaria" />
           </div>
 
           <div className="hero-ctas flex gap-4">
-            <button className="px-8 py-4 bg-[#e0e0e0] text-[#0A0A0A] font-sans text-[15px] font-medium rounded-lg tracking-wide anim-cta-1">
+            <button
+              className="font-sans text-[15px] font-medium rounded-full tracking-wide anim-cta-1"
+              style={{ padding: "16px 36px", background: "#e0e0e0", color: "#0A0A0A" }}
+            >
               Comecar gratis
             </button>
-            <button className="px-8 py-4 border border-[#444] text-[#aaa] font-sans text-[15px] rounded-lg tracking-wide anim-cta-2">
+            <button
+              className="font-sans text-[15px] rounded-full tracking-wide anim-cta-2"
+              style={{ padding: "16px 36px", border: "1px solid rgba(255,255,255,0.12)", color: "#999" }}
+            >
               Ver demo
             </button>
           </div>
         </div>
 
-        <div className="hero-product-media flex flex-col">
-          <MediaPlaceholder
-            label="product mini-screen"
-            hint="Mini-screen do produto principal em perspectiva isometrica. UI funcional estilizada, nao screenshot."
-            width="100%"
-            height="500px"
+        {/* Product mini-screen — with perspective and simulated UI */}
+        <div className="hero-product-media flex flex-col items-center justify-center">
+          <div
             className="anim-media"
-          />
+            style={{
+              transform: "perspective(1200px) rotateY(-5deg) rotateX(2deg)",
+              width: "100%",
+            }}
+          >
+            <MediaPlaceholder
+              label="product mini-screen"
+              hint="Mini-screen do produto em perspectiva isometrica. UI funcional estilizada, fundo escuro, accent da marca."
+              width="100%"
+              height="480px"
+              variant="screen"
+            />
+          </div>
         </div>
       </div>
     </section>

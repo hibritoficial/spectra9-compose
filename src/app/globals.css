@@ -166,23 +166,30 @@
 
 .media-placeholder {
   position: relative;
-  background: #1a1a1a;
-  border: 1px dashed #333;
-  border-radius: 12px;
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: help;
-  color: #666;
-  font-size: 13px;
+  color: #555;
+  font-size: 12px;
   font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
   text-align: center;
   padding: 24px;
-  transition: border-color 0.2s;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 16px 64px rgba(0, 0, 0, 0.15);
 }
 
 .media-placeholder:hover {
-  border-color: #555;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    0 16px 64px rgba(0, 0, 0, 0.2);
 }
 
 .media-placeholder::after {
@@ -237,14 +244,13 @@
    HINTS MODES
    ======================================== */
 
-/* Clean mode: hide placeholders borders/labels, show as solid dark */
+/* Clean mode: solid dark, no chrome — pure composition */
 .media-placeholder--clean {
-  border: none !important;
+  border-color: transparent !important;
   cursor: default;
-  color: transparent;
 }
 
-.media-placeholder--clean span {
+.media-placeholder--clean > span {
   display: none;
 }
 
@@ -255,6 +261,73 @@
 /* All mode: show tooltip always */
 .media-placeholder--all::after {
   opacity: 0.8 !important;
+}
+
+/* ========================================
+   PREMIUM TYPOGRAPHY — Aura + weight
+   ======================================== */
+
+.hero-headline {
+  text-shadow: 0 0 80px rgba(255, 255, 255, 0.03);
+  line-height: 0.92 !important;
+}
+
+/* ========================================
+   GRADIENT MESH BACKGROUNDS (per variant)
+   ======================================== */
+
+.hero-statement-mesh {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,255,255,0.03) 0%, transparent 70%);
+}
+
+.hero-product-mesh {
+  background:
+    radial-gradient(ellipse 50% 60% at 30% 45%, rgba(255,255,255,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 80% 70%, rgba(255,255,255,0.015) 0%, transparent 50%);
+}
+
+.hero-split-mesh {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.025) 0%, transparent 40%, rgba(255,255,255,0.01) 100%);
+}
+
+.hero-video-mesh {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 55%, rgba(255,255,255,0.04) 0%, transparent 60%);
+}
+
+.hero-immersive-mesh {
+  background:
+    radial-gradient(ellipse 40% 35% at 25% 30%, rgba(255,255,255,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 35% 40% at 75% 65%, rgba(255,255,255,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%);
+}
+
+/* ========================================
+   SECTION DIVIDER — editorial line
+   ======================================== */
+
+.hero-section-end {
+  position: relative;
+  padding-bottom: 1px;
+}
+
+.hero-section-end::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+}
+
+/* Editorial separator line */
+.editorial-line {
+  width: 48px;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
 }
 
 /* ========================================
@@ -270,7 +343,7 @@
    RESPONSIVE — Desktop defaults (no container)
    ======================================== */
 
-.hero-statement .hero-headline { font-size: clamp(64px, 10vw, 120px); }
+.hero-statement .hero-headline { font-size: clamp(72px, 11vw, 140px); }
 .hero-product .hero-headline { font-size: clamp(48px, 7vw, 96px); }
 .hero-split .hero-headline { font-size: clamp(40px, 5.5vw, 80px); }
 .hero-video .hero-headline { font-size: clamp(48px, 8vw, 96px); }

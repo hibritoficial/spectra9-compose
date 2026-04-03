@@ -1,45 +1,57 @@
 "use client";
 
-import { useCompose } from "./ComposeContext";
-
 export default function SimulatedNavbar() {
-  const { hints } = useCompose();
-  if (hints === "clean") return null;
-
   return (
     <nav
-      className="relative z-20 w-full h-16 flex items-center justify-between px-8 anim-fade-in"
+      className="relative z-20 w-full h-16 flex items-center justify-between px-10 anim-fade-in"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        background: "rgba(255,255,255,0.02)",
+        borderBottom: "1px solid rgba(255,255,255,0.04)",
       }}
     >
-      {/* Logo placeholder */}
-      <div
-        className="flex items-center justify-center"
-        style={{
-          width: 120,
-          height: 32,
-          border: "1px dashed rgba(255,255,255,0.12)",
-          borderRadius: 6,
-          color: "#555",
-          fontFamily: '"SF Mono", monospace',
-          fontSize: 11,
-        }}
-      >
-        LOGO
+      {/* Logo — refined */}
+      <div className="flex items-center gap-2">
+        <div
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: 8,
+            background: "linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)",
+            border: "1px solid rgba(255,255,255,0.06)",
+          }}
+        />
+        <span
+          style={{
+            fontFamily: '"Helvetica Neue", sans-serif',
+            fontSize: 15,
+            fontWeight: 500,
+            color: "#888",
+            letterSpacing: "0.02em",
+          }}
+        >
+          Brand
+        </span>
       </div>
 
       {/* Nav links */}
-      <div className="flex items-center gap-8">
-        <span className="font-sans text-[14px] text-[#666]">Link 1</span>
-        <span className="font-sans text-[14px] text-[#666]">Link 2</span>
-        <span className="font-sans text-[14px] text-[#666]">Link 3</span>
+      <div className="flex items-center gap-10">
+        <span className="font-sans text-[14px] text-[#555] hover:text-[#888] transition-colors duration-200 cursor-default">
+          Produto
+        </span>
+        <span className="font-sans text-[14px] text-[#555] hover:text-[#888] transition-colors duration-200 cursor-default">
+          Sobre
+        </span>
+        <span className="font-sans text-[14px] text-[#555] hover:text-[#888] transition-colors duration-200 cursor-default">
+          Contato
+        </span>
         <button
-          className="px-5 py-2 font-sans text-[14px] text-[#777] rounded-lg"
-          style={{ border: "1px solid rgba(255,255,255,0.1)" }}
+          className="px-5 py-2 font-sans text-[13px] text-[#999] rounded-full cursor-default"
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
         >
-          CTA
+          Acessar
         </button>
       </div>
     </nav>
