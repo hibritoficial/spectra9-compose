@@ -2,19 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
-import {
-  Crosshair,
-  Zap,
-  Wrench,
-  Monitor,
-  MessageCircle,
-  Users,
-  DollarSign,
-  HelpCircle,
-  Rocket,
-  Mail,
-  Minus,
-} from "lucide-react";
+import { Eye } from "lucide-react";
 import {
   DndContext,
   closestCenter,
@@ -32,55 +20,43 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import {
+  pageTemplates,
+  purposeCatalog,
+  purposeDef,
+  resolveVariant,
+} from "../../components/architect/blockCatalog";
+import VariantPicker from "../../components/architect/VariantPicker";
+import ComposedPreview, {
+  type CanvasBlock,
+} from "../../components/architect/ComposedPreview";
 
-/* ── Block catalog ── */
+/* ── Canvas block factory ── */
 
-interface BlockDef {
-  purpose: string;
-  label: string;
-  jtbd: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  elements: string[];
+let idCounter = 0;
+function makeBlock(
+  purpose: string,
+  variantHint?: string | null,
+): CanvasBlock {
+  return {
+    id: `block-${++idCounter}`,
+    purpose,
+    variant: resolveVariant(purpose, variantHint),
+  };
 }
-
-const blockCatalog: BlockDef[] = [
-  { purpose: "hero", label: "Hero", jtbd: "Isso é para mim?", icon: Crosshair, elements: ["Headline", "Sub", "CTA", "Media"] },
-  { purpose: "overview", label: "Overview", jtbd: "O que faz?", icon: Zap, elements: ["Headline", "Items", "Media"] },
-  { purpose: "feature_showcase", label: "Feature Showcase", jtbd: "Como funciona?", icon: Wrench, elements: ["Headline", "Steps", "Media"] },
-  { purpose: "product_demo", label: "Product Demo", jtbd: "Mostra na prática", icon: Monitor, elements: ["Screen", "Headline", "Body"] },
-  { purpose: "social_proof", label: "Social Proof", jtbd: "Quem mais confia?", icon: MessageCircle, elements: ["Testimonials", "Logos"] },
-  { purpose: "about", label: "About / Quem Somos", jtbd: "Quem está por trás?", icon: Users, elements: ["Headline", "Body", "Media"] },
-  { purpose: "pricing", label: "Pricing", jtbd: "Quanto custa?", icon: DollarSign, elements: ["Plans", "CTA", "FAQ"] },
-  { purpose: "faq", label: "FAQ", jtbd: "E se eu tiver dúvidas?", icon: HelpCircle, elements: ["Questions", "Answers"] },
-  { purpose: "cta", label: "CTA Final", jtbd: "O que faço agora?", icon: Rocket, elements: ["Headline", "CTA", "Sub"] },
-  { purpose: "newsletter", label: "Newsletter", jtbd: "Quero ficar por dentro", icon: Mail, elements: ["Headline", "Input", "CTA"] },
-  { purpose: "footer", label: "Footer", jtbd: "Links e contato", icon: Minus, elements: ["Links", "Social", "Copyright"] },
-];
-
-/* ── Templates ── */
-
-const templates: Record<string, { label: string; blocks: string[] }> = {
-  saas: { label: "SaaS Landing", blocks: ["hero", "overview", "feature_showcase", "feature_showcase", "social_proof", "pricing", "cta"] },
-  institutional: { label: "Site Institucional", blocks: ["hero", "about", "feature_showcase", "social_proof", "cta"] },
-  product: { label: "Produto / Serviço", blocks: ["hero", "feature_showcase", "product_demo", "social_proof", "pricing", "faq", "cta"] },
-  brand: { label: "Manifesto / Brand", blocks: ["hero", "about", "feature_showcase", "cta"] },
-};
 
 /* ── Sortable block card ── */
-
-interface CanvasBlock {
-  id: string;
-  purpose: string;
-}
 
 function SortableBlock({
   block,
   index,
   onRemove,
+  onVariantChange,
 }: {
   block: CanvasBlock;
   index: number;
   onRemove: (id: string) => void;
+  onVariantChange: (id: string, variant: string) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: block.id });
@@ -91,8 +67,9 @@ function SortableBlock({
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const def = blockCatalog.find((b) => b.purpose === block.purpose);
+  const def = purposeDef(block.purpose);
   if (!def) return null;
+  const Icon = def.icon;
 
   return (
     <div
@@ -101,7 +78,6 @@ function SortableBlock({
       className="flex items-start gap-4 p-5 rounded-xl transition-colors duration-150"
       {...attributes}
     >
-      {/* Drag handle */}
       <div
         {...listeners}
         className="mt-1 cursor-grab active:cursor-grabbing text-[#444] hover:text-[#777] transition-colors duration-150 shrink-0"
@@ -110,11 +86,12 @@ function SortableBlock({
         &#x2630;
       </div>
 
-      {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-1.5">
-          <def.icon size={16} className="text-[#888] shrink-0" />
-          <span className="font-sans text-[16px] font-medium text-[#ddd]">{def.label}</span>
+          <Icon size={16} className="text-[#888] shrink-0" />
+          <span className="font-sans text-[16px] font-medium text-[#ddd]">
+            {def.label}
+          </span>
           <span className="font-mono text-[11px] text-[#444] ml-auto">
             {String(index + 1).padStart(2, "0")}
           </span>
@@ -122,7 +99,13 @@ function SortableBlock({
         <p className="font-sans text-[13px] italic text-[#666] mb-3">
           Responde: &ldquo;{def.jtbd}&rdquo;
         </p>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex items-center flex-wrap gap-2">
+          <VariantPicker
+            purpose={block.purpose}
+            variant={block.variant}
+            onChange={(v) => onVariantChange(block.id, v)}
+          />
+          <span className="w-px h-4 bg-[#222]" />
           {def.elements.map((el) => (
             <span
               key={el}
@@ -139,7 +122,6 @@ function SortableBlock({
         </div>
       </div>
 
-      {/* Remove button */}
       <button
         onClick={() => onRemove(block.id)}
         className="mt-1 cursor-pointer text-[#444] hover:text-[#C75A3A] transition-colors duration-150 shrink-0"
@@ -151,19 +133,31 @@ function SortableBlock({
   );
 }
 
-/* ── AI Guide (architect-specific) ── */
+/* ── AI Guide ── */
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
+interface ComposeBlockInput {
+  purpose: string;
+  variant_hint?: string | null;
+}
+
+interface ComposeResult {
+  rationale: string;
+  blocks: ComposeBlockInput[];
+}
+
 function ArchitectGuide({
   blocks,
   template,
+  onCompose,
 }: {
   blocks: CanvasBlock[];
   template: string;
+  onCompose: (compose: ComposeResult) => void;
 }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -173,11 +167,16 @@ function ArchitectGuide({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   }, [messages]);
 
   useEffect(() => {
-    if (inputRef.current) setTimeout(() => inputRef.current?.focus(), 300);
+    if (inputRef.current) {
+      const t = setTimeout(() => inputRef.current?.focus(), 300);
+      return () => clearTimeout(t);
+    }
   }, []);
 
   useEffect(() => {
@@ -187,7 +186,7 @@ function ArchitectGuide({
         {
           role: "assistant",
           content:
-            "Vamos montar a estrutura da sua página.\n\nMe conta: é uma landing de produto, site institucional, página de serviço, ou algo diferente? Posso sugerir uma estrutura inicial que você ajusta.",
+            "Vamos montar a estrutura da sua página.\n\nMe conta em uma frase: que tipo de página? Ex: landing de SaaS B2B para PMs, site institucional de agência regenerativa, página de preços de ferramenta dev. Eu proponho a estrutura e você ajusta.",
         },
       ]);
     }
@@ -197,8 +196,8 @@ function ArchitectGuide({
     async (text: string) => {
       if (!text.trim() || loading) return;
       const userMsg: Message = { role: "user", content: text.trim() };
-      const newMessages = [...messages, userMsg];
-      setMessages(newMessages);
+      const nextMessages = [...messages, userMsg];
+      setMessages(nextMessages);
       setInput("");
       setLoading(true);
 
@@ -207,7 +206,7 @@ function ArchitectGuide({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            messages: newMessages,
+            messages: nextMessages,
             context: {
               phase: "architect",
               template,
@@ -215,10 +214,27 @@ function ArchitectGuide({
             },
           }),
         });
-        const data = await res.json();
+        const data = (await res.json()) as {
+          text?: string;
+          compose?: ComposeResult | null;
+          error?: string;
+        };
+
+        if (data.compose) {
+          onCompose(data.compose);
+        }
+
+        const assistantText =
+          data.text ||
+          (data.compose
+            ? "Estrutura aplicada no canvas."
+            : data.error
+            ? "Desculpe, algo deu errado."
+            : "Sem resposta.");
+
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: data.text || "Desculpe, algo deu errado." },
+          { role: "assistant", content: assistantText },
         ]);
       } catch {
         setMessages((prev) => [
@@ -229,12 +245,11 @@ function ArchitectGuide({
         setLoading(false);
       }
     },
-    [messages, loading, template, blocks]
+    [messages, loading, template, blocks, onCompose],
   );
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
       <div
         className="flex items-center px-5 shrink-0"
         style={{ height: 52, borderBottom: "1px solid #1a1a1a" }}
@@ -244,15 +259,22 @@ function ArchitectGuide({
         </span>
       </div>
 
-      {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4" style={{ scrollbarWidth: "thin" }}>
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto px-5 py-4"
+        style={{ scrollbarWidth: "thin" }}
+      >
         {messages.map((msg, i) => (
-          <div key={i} className={`mb-4 ${msg.role === "user" ? "flex justify-end" : ""}`}>
+          <div
+            key={i}
+            className={`mb-4 ${msg.role === "user" ? "flex justify-end" : ""}`}
+          >
             <div
               style={{
                 maxWidth: msg.role === "user" ? "85%" : "100%",
                 padding: msg.role === "user" ? "10px 14px" : "0",
-                background: msg.role === "user" ? "rgba(199,90,58,0.12)" : "transparent",
+                background:
+                  msg.role === "user" ? "rgba(199,90,58,0.12)" : "transparent",
                 borderRadius: msg.role === "user" ? 12 : 0,
                 fontSize: 14,
                 lineHeight: 1.65,
@@ -266,13 +288,17 @@ function ArchitectGuide({
         ))}
         {loading && (
           <div className="mb-4">
-            <span className="font-mono text-[12px] text-[#555]">pensando...</span>
+            <span className="font-mono text-[12px] text-[#555]">
+              compondo...
+            </span>
           </div>
         )}
       </div>
 
-      {/* Input */}
-      <div className="shrink-0 px-4 py-3" style={{ borderTop: "1px solid #1a1a1a" }}>
+      <div
+        className="shrink-0 px-4 py-3"
+        style={{ borderTop: "1px solid #1a1a1a" }}
+      >
         <div className="flex gap-2">
           <input
             ref={inputRef}
@@ -284,7 +310,7 @@ function ArchitectGuide({
                 sendMessage(input);
               }
             }}
-            placeholder="Pergunte ao guia..."
+            placeholder="Descreva a página ou pergunte..."
             className="flex-1 px-4 py-2.5 rounded-lg font-sans text-[14px] text-[#ddd] placeholder-[#444] outline-none"
             style={{ background: "#1a1a1a", border: "1px solid #222" }}
           />
@@ -307,26 +333,30 @@ function ArchitectGuide({
 
 /* ── Main Page ── */
 
-let idCounter = 0;
-function makeBlock(purpose: string): CanvasBlock {
-  return { id: `block-${++idCounter}-${Date.now()}`, purpose };
-}
-
 export default function ArchitectPage() {
+  const [mounted, setMounted] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState("saas");
-  const [blocks, setBlocks] = useState<CanvasBlock[]>(() =>
-    templates.saas.blocks.map(makeBlock)
-  );
+  const [blocks, setBlocks] = useState<CanvasBlock[]>(() => {
+    const tpl = pageTemplates.find((t) => t.key === "saas");
+    return tpl ? tpl.blocks.map((p) => makeBlock(p)) : [];
+  });
   const [showAddMenu, setShowAddMenu] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 
   const handleTemplateChange = useCallback((key: string) => {
+    const tpl = pageTemplates.find((t) => t.key === key);
+    if (!tpl) return;
     setActiveTemplate(key);
-    setBlocks(templates[key].blocks.map(makeBlock));
+    setBlocks(tpl.blocks.map((p) => makeBlock(p)));
   }, []);
 
   const handleDragEnd = useCallback((event: DragEndEvent) => {
@@ -349,10 +379,31 @@ export default function ArchitectPage() {
     setShowAddMenu(false);
   }, []);
 
-  // Close add menu on Escape
+  const changeVariant = useCallback((id: string, variant: string) => {
+    setBlocks((prev) =>
+      prev.map((b) => (b.id === id ? { ...b, variant } : b)),
+    );
+  }, []);
+
+  const handleCompose = useCallback((compose: ComposeResult) => {
+    setActiveTemplate("custom");
+    setBlocks(
+      compose.blocks.map((b) => makeBlock(b.purpose, b.variant_hint ?? null)),
+    );
+  }, []);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowAddMenu(false);
+      if (e.key === "p" || e.key === "P") {
+        if (
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement
+        ) {
+          return;
+        }
+        setShowPreview((s) => !s);
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -360,7 +411,6 @@ export default function ArchitectPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
-      {/* Top bar */}
       <header className="control-bar fixed top-0 left-0 right-0 z-50 h-14 flex items-center px-5 gap-4">
         <span className="font-mono text-[12px] text-[#666] tracking-[0.2em] uppercase shrink-0">
           COMPOSE
@@ -382,56 +432,121 @@ export default function ArchitectPage() {
         <span className="font-mono text-[11px] text-[#444]">
           {blocks.length} seções
         </span>
+        <button
+          onClick={() => setShowPreview(true)}
+          disabled={blocks.length === 0}
+          className="flex items-center gap-2 px-3 py-1.5 rounded cursor-pointer transition-colors duration-150"
+          style={{
+            background: blocks.length > 0 ? "#C75A3A" : "#1a1a1a",
+            color: blocks.length > 0 ? "#fff" : "#444",
+            border: "1px solid rgba(255,255,255,0.06)",
+          }}
+          title="Preview (P)"
+        >
+          <Eye size={14} />
+          <span className="font-mono text-[11px]">Preview</span>
+        </button>
       </header>
 
-      {/* Content — 60/40 split */}
       <div className="flex pt-14" style={{ height: "100vh" }}>
-        {/* Left — Canvas (60%) */}
-        <div className="flex-[3] overflow-y-auto px-8 py-6" style={{ borderRight: "1px solid #1a1a1a" }}>
-          {/* Template selector */}
+        <div
+          className="flex-[3] overflow-y-auto px-8 py-6"
+          style={{ borderRight: "1px solid #1a1a1a" }}
+        >
           <div className="mb-8">
             <label className="font-mono text-[11px] text-[#555] uppercase tracking-wider block mb-3">
-              Template
+              Tipo de página
             </label>
-            <div className="flex gap-2">
-              {Object.entries(templates).map(([key, t]) => (
-                <button
-                  key={key}
-                  onClick={() => handleTemplateChange(key)}
-                  className="px-4 py-2.5 rounded-lg font-sans text-[14px] cursor-pointer transition-colors duration-150"
+            <div className="flex gap-2 flex-wrap">
+              {pageTemplates.map((t) => {
+                const active = activeTemplate === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    onClick={() => handleTemplateChange(t.key)}
+                    className="px-4 py-2.5 rounded-lg font-sans text-[14px] cursor-pointer transition-colors duration-150"
+                    style={{
+                      background: active ? "rgba(255,255,255,0.06)" : "transparent",
+                      color: active ? "#ddd" : "#555",
+                      border: active
+                        ? "1px solid rgba(255,255,255,0.08)"
+                        : "1px solid rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    {t.label}
+                  </button>
+                );
+              })}
+              {activeTemplate === "custom" && (
+                <span
+                  className="px-4 py-2.5 rounded-lg font-mono text-[11px] text-[#C75A3A]"
                   style={{
-                    background: activeTemplate === key ? "rgba(255,255,255,0.06)" : "transparent",
-                    color: activeTemplate === key ? "#ddd" : "#555",
-                    border: activeTemplate === key ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(255,255,255,0.04)",
+                    background: "rgba(199,90,58,0.08)",
+                    border: "1px solid rgba(199,90,58,0.2)",
                   }}
                 >
-                  {t.label}
-                </button>
-              ))}
+                  &#x2726; composição do guia
+                </span>
+              )}
             </div>
           </div>
 
-          {/* Sortable blocks */}
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
-              <div className="flex flex-col gap-3">
-                {blocks.map((block, i) => (
+          {mounted ? (
+            <DndContext
+              id="architect-canvas"
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={blocks.map((b) => b.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <div className="flex flex-col gap-3">
+                  {blocks.map((block, i) => (
+                    <div
+                      key={block.id}
+                      className="rounded-xl"
+                      style={{
+                        background: "#111",
+                        border: "1px dashed rgba(255,255,255,0.06)",
+                      }}
+                    >
+                      <SortableBlock
+                        block={block}
+                        index={i}
+                        onRemove={removeBlock}
+                        onVariantChange={changeVariant}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          ) : (
+            <div className="flex flex-col gap-3 opacity-50">
+              {blocks.map((block) => {
+                const def = purposeDef(block.purpose);
+                if (!def) return null;
+                return (
                   <div
                     key={block.id}
-                    className="rounded-xl"
+                    className="rounded-xl p-5"
                     style={{
                       background: "#111",
                       border: "1px dashed rgba(255,255,255,0.06)",
+                      minHeight: 92,
                     }}
                   >
-                    <SortableBlock block={block} index={i} onRemove={removeBlock} />
+                    <span className="font-sans text-[14px] text-[#666]">
+                      {def.label}
+                    </span>
                   </div>
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
+                );
+              })}
+            </div>
+          )}
 
-          {/* Add section button */}
           <div className="relative mt-6">
             <button
               onClick={() => setShowAddMenu(!showAddMenu)}
@@ -450,44 +565,72 @@ export default function ArchitectPage() {
                 style={{ background: "#141414", border: "1px solid #222" }}
               >
                 <div className="max-h-[360px] overflow-y-auto py-2">
-                  {blockCatalog.map((def) => (
-                    <button
-                      key={def.purpose}
-                      onClick={() => addBlock(def.purpose)}
-                      className="w-full flex items-center gap-3 px-5 py-3 text-left cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-150"
-                    >
-                      <def.icon size={16} className="text-[#777] shrink-0" />
-                      <div>
-                        <span className="font-sans text-[14px] text-[#ccc]">{def.label}</span>
-                        <span className="font-sans text-[12px] text-[#555] ml-3">{def.jtbd}</span>
-                      </div>
-                    </button>
-                  ))}
+                  {purposeCatalog.map((def) => {
+                    const Icon = def.icon;
+                    return (
+                      <button
+                        key={def.purpose}
+                        onClick={() => addBlock(def.purpose)}
+                        className="w-full flex items-center gap-3 px-5 py-3 text-left cursor-pointer hover:bg-[#1a1a1a] transition-colors duration-150"
+                      >
+                        <Icon size={16} className="text-[#777] shrink-0" />
+                        <div>
+                          <span className="font-sans text-[14px] text-[#ccc]">
+                            {def.label}
+                          </span>
+                          <span className="font-sans text-[12px] text-[#555] ml-3">
+                            {def.jtbd}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
           </div>
 
-          {/* Choose molds button */}
-          <div className="mt-8 mb-8">
-            <Link
-              href={`/blocks?sequence=${blocks.map((b) => b.purpose).join(",")}`}
-              className="block w-full py-4 rounded-xl font-sans text-[16px] font-medium text-center cursor-pointer transition-colors duration-150"
+          <div className="mt-8 mb-8 flex gap-3">
+            <button
+              onClick={() => setShowPreview(true)}
+              disabled={blocks.length === 0}
+              className="flex-1 py-4 rounded-xl font-sans text-[16px] font-medium cursor-pointer transition-colors duration-150"
               style={{
                 background: blocks.length > 0 ? "#C75A3A" : "#222",
                 color: blocks.length > 0 ? "#fff" : "#555",
               }}
             >
-              Escolher moldes &rarr;
+              Preview em 4 viewports &rarr;
+            </button>
+            <Link
+              href={`/blocks?sequence=${blocks.map((b) => b.purpose).join(",")}`}
+              className="py-4 px-6 rounded-xl font-sans text-[14px] cursor-pointer transition-colors duration-150 flex items-center"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                color: "#aaa",
+                border: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              Explorar blocos
             </Link>
           </div>
         </div>
 
-        {/* Right — AI Guide (40%) */}
         <div className="flex-[2]" style={{ background: "#111" }}>
-          <ArchitectGuide blocks={blocks} template={activeTemplate} />
+          <ArchitectGuide
+            blocks={blocks}
+            template={activeTemplate}
+            onCompose={handleCompose}
+          />
         </div>
       </div>
+
+      {showPreview && (
+        <ComposedPreview
+          blocks={blocks}
+          onClose={() => setShowPreview(false)}
+        />
+      )}
     </div>
   );
 }
