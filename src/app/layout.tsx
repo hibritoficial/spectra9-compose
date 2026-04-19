@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { DsTokensProvider } from "../components/ds/DsTokensContext";
 
 export const metadata: Metadata = {
   title: "COMPOSE — Spectra9",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full bg-[#0A0A0A] text-[#ededed]">{children}</body>
+      <body className="min-h-full bg-[#0A0A0A] text-[#ededed]">
+        <DsTokensProvider>{children}</DsTokensProvider>
+      </body>
     </html>
   );
 }

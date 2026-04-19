@@ -522,6 +522,82 @@
    RESPONSIVE — Mobile (< 400px container)
    ======================================== */
 
+/* ========================================
+   DS TOKEN OVERRIDES
+   ======================================== */
+/* Ativo via atributo [data-ds-theme="on"] em wrapper (ComposedPreview).
+   Remapeia hex hardcoded dos blocks pros tokens --ds-* do DS ativo.
+   Cores inline (white/#e0e0e0 nos CTAs) ficam como estão — próximo passo é
+   refatorar blocks pra consumir var(--ds-brand-accent) diretamente. */
+
+[data-ds-theme] .bg-\[\#0A0A0A\],
+[data-ds-theme] [style*="background: #0A0A0A"],
+[data-ds-theme] [style*="background:#0A0A0A"] {
+  background-color: var(--ds-surf-base, #0A0A0A) !important;
+}
+
+[data-ds-theme] .bg-\[\#111\] {
+  background-color: var(--ds-surf-raised, #111) !important;
+}
+
+[data-ds-theme] .bg-\[\#141414\] {
+  background-color: var(--ds-surf-raised, #141414) !important;
+}
+
+[data-ds-theme] .bg-\[\#1a1a1a\] {
+  background-color: var(--ds-surf-overlay, #1a1a1a) !important;
+}
+
+[data-ds-theme] .text-\[\#e8e8e8\],
+[data-ds-theme] .text-\[\#e0e0e0\],
+[data-ds-theme] .text-\[\#d0d0d0\],
+[data-ds-theme] .text-\[\#ddd\],
+[data-ds-theme] .text-\[\#ccc\] {
+  color: var(--ds-text-primary, #e8e8e8) !important;
+}
+
+[data-ds-theme] .text-\[\#bbb\] {
+  color: var(--ds-text-secondary, #bbb) !important;
+}
+
+[data-ds-theme] .text-\[\#aaa\],
+[data-ds-theme] .text-\[\#999\],
+[data-ds-theme] .text-\[\#888\] {
+  color: var(--ds-text-secondary, #999) !important;
+}
+
+[data-ds-theme] .text-\[\#777\],
+[data-ds-theme] .text-\[\#666\] {
+  color: var(--ds-text-tertiary, #777) !important;
+}
+
+[data-ds-theme] .text-\[\#555\],
+[data-ds-theme] .text-\[\#444\] {
+  color: var(--ds-text-disabled, #555) !important;
+}
+
+[data-ds-theme] .font-serif {
+  font-family: var(--ds-font-heading, Georgia), "Times New Roman", serif;
+}
+
+[data-ds-theme] .font-sans {
+  font-family: var(--ds-font-body, "Helvetica Neue"), Helvetica, Arial, sans-serif;
+}
+
+/* Border defaults em blocks que usam rgba-branco fino */
+[data-ds-theme] .media-placeholder {
+  background: var(--ds-surf-raised, #141414);
+  border-color: var(--ds-border-subtle, rgba(255, 255, 255, 0.06));
+}
+
+/* Gradient mesh no hero — se tiver gradient do DS, usa ele */
+[data-ds-theme] .hero-immersive-mesh,
+[data-ds-theme] .hero-statement-mesh,
+[data-ds-theme] .hero-product-mesh {
+  background: var(--ds-gradient, radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,255,255,0.03) 0%, transparent 70%));
+  opacity: 0.35;
+}
+
 @container viewport (max-width: 400px) {
   .hero-headline { font-size: clamp(28px, 10cqi, 44px) !important; }
 

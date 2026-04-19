@@ -8,6 +8,7 @@ import {
   variantsForPurpose,
 } from "./blockCatalog";
 import PlaceholderBlock from "./PlaceholderBlock";
+import { useDsTokens } from "../ds/DsTokensContext";
 
 export interface CanvasBlock {
   id: string;
@@ -52,9 +53,11 @@ function RenderedBlock({ block }: { block: CanvasBlock }) {
 function ViewportFrame({
   viewport,
   blocks,
+  dsActive,
 }: {
   viewport: Viewport;
   blocks: CanvasBlock[];
+  dsActive: boolean;
 }) {
   const scaledWidth = viewport.width * viewport.scale;
 
@@ -72,16 +75,20 @@ function ViewportFrame({
         </span>
       </div>
       <div
-        className="rounded-xl overflow-hidden bg-[#0A0A0A]"
+        className="rounded-xl overflow-hidden"
         style={{
           width: scaledWidth,
           maxHeight: "calc(100vh - 180px)",
           overflowY: "auto",
           border: "1px solid #1a1a1a",
           scrollbarWidth: "thin",
+          background: dsActive
+            ? "var(--ds-surf-base, #0A0A0A)"
+            : "#0A0A0A",
         }}
       >
         <div
+          data-ds-theme={dsActive ? "on" : undefined}
           style={{
             width: viewport.width,
             transform: `scale(${viewport.scale})`,
@@ -113,6 +120,9 @@ export default function ComposedPreview({
   blocks: CanvasBlock[];
   onClose: () => void;
 }) {
+  const { tokens, mode } = useDsTokens();
+  const dsActive = Boolean(tokens);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -130,7 +140,6 @@ export default function ComposedPreview({
       className="fixed inset-0 z-[100] flex flex-col"
       style={{ background: "#050505" }}
     >
-      {/* Header */}
       <header
         className="h-14 shrink-0 flex items-center px-6 gap-4"
         style={{ borderBottom: "1px solid #1a1a1a" }}
@@ -140,8 +149,23 @@ export default function ComposedPreview({
         </span>
         <div className="w-px h-4 bg-[#333]" />
         <span className="font-mono text-[11px] text-[#555]">
-          {blocks.length} seções · {variantCount} renderizadas · {VIEWPORTS.length} viewports
+          {blocks.length} seções · {variantCount} renderizadas ·{" "}
+          {VIEWPORTS.length} viewports
         </span>
+        {dsActive && tokens && (
+          <>
+            <div className="w-px h-4 bg-[#333]" />
+            <div className="flex items-center gap-2">
+              <span
+                className="w-3 h-3 rounded-full"
+                style={{ background: tokens.brand.accent }}
+              />
+              <span className="font-mono text-[11px] text-[#aaa]">
+                DS: {tokens.name} {tokens.version} · {mode}
+              </span>
+            </div>
+          </>
+        )}
         <div className="flex-1" />
         <button
           onClick={onClose}
@@ -153,13 +177,17 @@ export default function ComposedPreview({
         </button>
       </header>
 
-      {/* Viewports */}
       <div
         className="flex-1 overflow-x-auto overflow-y-hidden p-8 flex items-start gap-6"
         style={{ scrollbarWidth: "thin" }}
       >
         {VIEWPORTS.map((vp) => (
-          <ViewportFrame key={vp.id} viewport={vp} blocks={blocks} />
+          <ViewportFrame
+            key={vp.id}
+            viewport={vp}
+            blocks={blocks}
+            dsActive={dsActive}
+          />
         ))}
       </div>
     </div>

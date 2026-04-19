@@ -30,6 +30,7 @@ import VariantPicker from "../../components/architect/VariantPicker";
 import ComposedPreview, {
   type CanvasBlock,
 } from "../../components/architect/ComposedPreview";
+import DsSelector from "../../components/ds/DsSelector";
 
 /* ── Canvas block factory ── */
 
@@ -429,6 +430,8 @@ export default function ArchitectPage() {
           Blocks
         </Link>
         <div className="flex-1" />
+        <DsSelector />
+        <div className="w-px h-5 bg-[#333]" />
         <span className="font-mono text-[11px] text-[#444]">
           {blocks.length} seções
         </span>
